@@ -1,0 +1,80 @@
+OPTIONS rtsp://192.168.1.101/axis-media/media.amp?camera=1&overview=0&resolution=1280x720&videoframeskipmode=empty&videozprofile=classic&fps=30&timestamp=1732173777144&Axis-Orig-Sw=true RTSP/1.0
+CSeq: 1
+
+RTSP/1.0 200 OK
+CSeq: 1
+Public: OPTIONS, DESCRIBE, ANNOUNCE, GET_PARAMETER, PAUSE, PLAY, RECORD, SETUP, SET_PARAMETER, TEARDOWN
+Server: GStreamer RTSP server
+Date: Thu, 21 Nov 2024 19:24:41 GMT
+
+DESCRIBE rtsp://192.168.1.101/axis-media/media.amp?camera=1&overview=0&resolution=1280x720&videoframeskipmode=empty&videozprofile=classic&fps=30&timestamp=1732173777144&Axis-Orig-Sw=true RTSP/1.0
+CSeq: 2
+Accept: application/sdp
+
+RTSP/1.0 200 OK
+CSeq: 2
+Content-Type: application/sdp
+Content-Base: rtsp://192.168.1.101/axis-media/media.amp/
+Server: GStreamer RTSP server
+Date: Thu, 21 Nov 2024 19:24:41 GMT
+Content-Length: 1047
+
+v=0
+o=- 13854560327259446486 1 IN IP4 127.0.0.1
+s=Session streamed with GStreamer
+i=rtsp-server
+t=0 0
+a=tool:GStreamer
+a=type:broadcast
+a=range:npt=now-
+a=control:rtsp://192.168.1.101/axis-media/media.amp?camera=1&overview=0&resolution=1280x720&videoframeskipmode=empty&videozprofile=classic&fps=30&timestamp=1732173777144&Axis-Orig-Sw=true
+m=video 0 RTP/AVP 96
+c=IN IP4 0.0.0.0
+b=AS:51200
+a=rtpmap:96 H264/90000
+a=fmtp:96 packetization-mode=1;profile-level-id=640029;sprop-parameter-sets=Z2QAKa0AxSAUAW6bgICA0oADbugAzf5gB4kRUA==,aO48sA==
+a=ts-refclk:local
+a=mediaclk:sender
+a=x-onvif-track:VIDEO000
+a=recvonly
+a=control:rtsp://192.168.1.101/axis-media/media.amp/stream=0?camera=1&overview=0&resolution=1280x720&videoframeskipmode=empty&videozprofile=classic&fps=30&timestamp=1732173777144&Axis-Orig-Sw=true
+a=framerate:30.000000
+a=transform:1.000000,0.000000,0.000000;0.000000,1.000000,0.000000;0.000000,0.000000,1.000000
+a=x-sensor-transform:1.000000,0.000000,0.000000;0.000000,1.000000,0.000000;0.000000,0.000000,1.000000
+
+SETUP rtsp://192.168.1.101/axis-media/media.amp/stream=0?camera=1&overview=0&resolution=1280x720&videoframeskipmode=empty&videozprofile=classic&fps=30&timestamp=1732173777144&Axis-Orig-Sw=true RTSP/1.0
+CSeq: 3
+Blocksize: 64000
+Transport: RTP/AVP/TCP;unicast;interleaved=0-1
+
+RTSP/1.0 200 OK
+CSeq: 3
+Transport: RTP/AVP/TCP;unicast;interleaved=0-1;ssrc=CB8D0452;mode="PLAY"
+Server: GStreamer RTSP server
+Session: qis9c5GCq3R2OxMo;timeout=60
+Date: Thu, 21 Nov 2024 19:24:41 GMT
+
+PLAY rtsp://192.168.1.101/axis-media/media.amp?camera=1&overview=0&resolution=1280x720&videoframeskipmode=empty&videozprofile=classic&fps=30&timestamp=1732173777144&Axis-Orig-Sw=true RTSP/1.0
+CSeq: 4
+Range: npt=0-
+Session: qis9c5GCq3R2OxMo
+
+RTSP/1.0 200 OK
+CSeq: 4
+RTP-Info: url=rtsp://192.168.1.101/axis-media/media.amp/stream=0?camera=1&overview=0&resolution=1280x720&videoframeskipmode=empty&videozprofile=classic&fps=30&timestamp=1732173777144&Axis-Orig-Sw=true;seq=22792;rtptime=420274776
+Range: npt=now-
+Server: GStreamer RTSP server
+Session: qis9c5GCq3R2OxMo;timeout=60
+Date: Thu, 21 Nov 2024 19:24:41 GMT
+
+TEARDOWN rtsp://192.168.1.101/axis-media/media.amp?camera=1&overview=0&resolution=1280x720&videoframeskipmode=empty&videozprofile=classic&fps=30&timestamp=1732173777144&Axis-Orig-Sw=true RTSP/1.0
+CSeq: 5
+Session: qis9c5GCq3R2OxMo
+
+RTSP/1.0 200 OK
+CSeq: 5
+Server: GStreamer RTSP server
+Session: qis9c5GCq3R2OxMo;timeout=60
+Connection: close
+Date: Thu, 21 Nov 2024 19:24:53 GMT
+
