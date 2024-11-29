@@ -152,7 +152,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="fileUtils.cpp" />
-    <ClCompile Include="h264.cpp" />
     <ClCompile Include="http.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="md5.cpp" />

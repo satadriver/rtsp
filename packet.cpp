@@ -66,7 +66,7 @@ const char* g_strPlayAuth =
 const char* g_strTeardownAuth =
 "%s rtsp://%s/axis-media/media.amp RTSP/1.0\r\n"
 "CSeq: %u\r\n"
-"Authorization: Digest username=\"%s\",realm=\"%s\",nonce=\"%s\",uri=\"%s\",response=\"%s\"\r\n"
+"%s\r\n"
 //"Range: npt=0.000-\r\n"
 "Session: %s\r\n\r\n";
 

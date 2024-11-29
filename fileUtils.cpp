@@ -1,6 +1,10 @@
 
 
 #include "fileUtils.h"
+#include <stdio.h>
+
+
+
 
 using namespace std;
 
@@ -28,7 +32,7 @@ int FWriter(string filename, const char* lpdate, int datesize) {
 	int ret = 0;
 
 	FILE* fp = fopen(filename.c_str(), "ab+");
-	if (fp <= 0)
+	if (fp == 0)
 	{
 		printf("FWriter fopen file:%s error\r\n", filename.c_str());
 		return FALSE;
@@ -56,7 +60,7 @@ int FWriter(string filename, const char* lpdate, int datesize, int cover) {
 		fp = fopen(filename.c_str(), "ab+");
 	}
 
-	if (fp <= 0)
+	if (fp == 0)
 	{
 		printf("FWriter fopen file:%s error\r\n", filename.c_str());
 		return FALSE;
@@ -78,17 +82,17 @@ int FReader(string filename, char** lpbuf, int* bufsize) {
 	int ret = 0;
 
 	FILE* fp = fopen(filename.c_str(), "rb");
-	if (fp <= 0)
+	if (fp == 0)
 	{
 		printf("FReader fopen file:%s error\r\n", filename.c_str());
 		return FALSE;
 	}
 
-	ret = fseek(fp, 0, FILE_END);
+	ret = fseek(fp, 0, SEEK_END);
 
 	int filesize = ftell(fp);
 
-	ret = fseek(fp, 0, FILE_BEGIN);
+	ret = fseek(fp, 0, SEEK_SET);
 
 	*bufsize = filesize;
 
@@ -96,7 +100,7 @@ int FReader(string filename, char** lpbuf, int* bufsize) {
 
 	ret = fread(*lpbuf, 1, filesize, fp);
 	fclose(fp);
-	if (ret <= FALSE)
+	if (ret == FALSE)
 	{
 		delete* lpbuf;
 		return FALSE;

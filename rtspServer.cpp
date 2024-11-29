@@ -1,7 +1,21 @@
 
+
+#ifdef _WIN32
 #include <winsock.h>
+#else
+#include <sys/types.h> 
+#include <sys/socket.h>
+#include <unistd.h>
+//#include <netinet/in.h>
+#include <pthread.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <sys/socket.h>
+#define closesocket close
+#endif
+
 #include <iostream>
-#include "rtspserver.h"
+#include "rtspServer.h"
 #include "packet.h"
 #include "fileUtils.h"
 #include "http.h"
@@ -9,6 +23,7 @@
 #include "utils.h"
 #include "md5.h"
 #include "rtsp.h"
+#include "public.h"
 
 
 using namespace std;
@@ -28,29 +43,38 @@ unsigned int g_servUdpPort2 = 50001;
 //unsigned int g_ssrc = 0x12345678;
 
 
-RtspServer::RtspServer(const char* ip, int port,const char * fn ) {
+RtspServer::RtspServer(const char* port,const char * fn ) {
+	int ret = 0;
+
+#ifdef _WIN32
 	WSADATA wsa = { 0 };
-	int ret = WSAStartup(0x0202, &wsa);
+	ret = WSAStartup(0x0202, &wsa);
 	if (ret) {
 		perror("WSAStartup error\r\n");
 	}
-	m_ip = ip;
-	m_port = port;
+#endif
+
+	if (port == 0) {
+		m_port = 554;
+	}
+	else {
+		m_port = atoi(port);
+	}
 
 	m_type = -1;
-	if (fn) {
-		m_fn = fn;
-	}
-	
-	if (m_fn == "") {
+
+	if (fn == 0) {
 		m_fn = PACKET_RSTP_FILENAME;
+	}
+	else {
+		m_fn = fn;
 	}
 
 	char* file = 0;
 	int fs = 0;
-
 	ret = FReader(m_fn, &file, &fs);
 	if (ret <= 0) {
+		printf("%s read file:%s error\r\n", __FUNCTION__, m_fn.c_str());
 		return ;
 	}
 	m_fs = fs;
@@ -76,16 +100,18 @@ RtspServer::RtspServer(const char* ip, int port,const char * fn ) {
 
 	RtspHeader* rtsp = (RtspHeader*)data;
 	if (rtsp->magic != 0x24) {
+		printf("%s file:%s format error\r\n", __FUNCTION__, m_fn.c_str());
 		return;
 	}
 
 	int size = ntohs(rtsp->length);
-
 	RtpHeader* rtp = (RtpHeader*)(data + sizeof(RtspHeader));
-
 	char strSsrc[16];
 	sprintf(strSsrc, "%u", ntohl(rtp->SyncSrcId));
 	m_ssrc = strSsrc;
+
+	printf("%s file:%s ssrc:%s, seq:%s, rtptime:%s\r\n", 
+		__FUNCTION__, m_fn.c_str(), m_ssrc.c_str(),seq.c_str(),rtptime.c_str());
 
 	char* rtpdata = (char*)data + sizeof(RtpHeader);
 	int rtpds = size - sizeof(RtpHeader);
@@ -93,7 +119,9 @@ RtspServer::RtspServer(const char* ip, int port,const char * fn ) {
 
 
 RtspServer::~RtspServer() {
+#ifdef _WIN32
 	WSACleanup();
+#endif
 	if (m_file) {
 		delete m_file;
 		m_file = 0;
@@ -102,32 +130,42 @@ RtspServer::~RtspServer() {
 
 
 
-int __stdcall RtspServer::RtpServer(RtspServer * instance) {
 
+#ifdef _WIN32
+void * __stdcall RtspServer::RtpServer(void * param) 
+#else
+void * __attribute__((__stdcall__))  RtspServer::RtpServer(void*param)
+#endif
+{
+	RtspServer * instance =(RtspServer *) param;
 	int ret = 0;
 
-	SOCKET s = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	int s = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 	if (s == INVALID_SOCKET) {
 		perror("socket error\r\n");
-		return -1;
+		return 0;
 	}
 
 	sockaddr_in sa = { 0 };
 	sa.sin_family = AF_INET;
+	#ifdef _WIN32
 	sa.sin_addr.S_un.S_addr = INADDR_ANY;
+	#else
+	sa.sin_addr.s_addr = INADDR_ANY;
+	#endif
 	sa.sin_port = ntohs(g_servUdpPort1);
 
 	ret = bind(s, (sockaddr*)&sa, sizeof(sockaddr));
 	if (ret) {
 		closesocket(s);
 		perror("bind\r\n");
-		return -1;
+		return 0;
 	}
 
 	while (1) {
 		char recvBuf[0x1000];
 		int recvLimit = sizeof(recvBuf);
-		int addrsize = sizeof(sockaddr_in);
+		socklen_t addrsize = sizeof(sockaddr_in);
 		sockaddr_in saClient = { 0 };
 		int recvlen = recvfrom(s, recvBuf, recvLimit-1, 0, (sockaddr*)&saClient, &addrsize);
 		if (recvlen > 0 && recvlen < recvLimit) {
@@ -150,33 +188,41 @@ int __stdcall RtspServer::RtpServer(RtspServer * instance) {
 }
 
 
-
-int __stdcall RtspServer::RtcpServer(RtspServer* instance) {
-
+#ifdef _WIN32
+void *  __stdcall RtspServer::RtcpServer(void* param) 
+#else
+void *  __attribute__((__stdcall__)) RtspServer::RtcpServer(void* param) 
+#endif
+{
+RtspServer * instance = (RtspServer *)param;
 	int ret = 0;
 
-	SOCKET s = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	int s = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 	if (s == INVALID_SOCKET) {
 		perror("socket error\r\n");
-		return -1;
+		return 0;
 	}
 
 	sockaddr_in sa = { 0 };
 	sa.sin_family = AF_INET;
+	#ifdef _WIN32
 	sa.sin_addr.S_un.S_addr = INADDR_ANY;
+	#else
+	sa.sin_addr.s_addr = INADDR_ANY;
+	#endif
 	sa.sin_port = ntohs(g_servUdpPort2);
 
 	ret = bind(s, (sockaddr*)&sa, sizeof(sockaddr));
 	if (ret) {
 		closesocket(s);
 		perror("bind\r\n");
-		return -1;
+		return 0;
 	}
 
 	while (1) {
 		char recvBuf[0x1000];
 		int recvLimit = sizeof(recvBuf)-1;
-		int addrsize = sizeof(sockaddr_in);
+		socklen_t addrsize = sizeof(sockaddr_in);
 		sockaddr_in saClient = { 0 };
 		int recvlen = recvfrom(s, recvBuf, recvLimit-1, 0, (sockaddr*)&saClient, &addrsize);
 		if (recvlen > 0 && recvlen < recvLimit) {
@@ -187,7 +233,6 @@ int __stdcall RtspServer::RtcpServer(RtspServer* instance) {
 			else {
 
 			}
-
 		}
 		else {
 			perror("recvfrom error\r\n");
@@ -198,11 +243,6 @@ int __stdcall RtspServer::RtcpServer(RtspServer* instance) {
 
 	return 0;
 }
-
-
-
-
-
 
 
 
@@ -213,7 +253,6 @@ string RtspServer::GetTransport(int type) {
 	const char* formatU = "RTP/AVP;unicast;client_port=%u-%u;server_port=%u-%u;ssrc=%s;mode=\"PLAY\"";
 	if (type == 0) {
 		sprintf(str, formatT,m_ssrc.c_str());
-
 	}
 	else {
 		sprintf(str, formatU,m_udpPort1, m_udpPort2, g_servUdpPort1,g_servUdpPort2, m_ssrc.c_str());
@@ -269,16 +308,21 @@ int RtspServer::ProcessRtsp(int sc) {
 					m_udpPort2 = atoi(port2.c_str());
 					tranport = GetTransport(1);
 					m_type = 1;
-
+#ifdef _WIN32
 					HANDLE ht = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)RtcpServer, this, 0, 0);
 					if (ht) {
 						CloseHandle(ht);
+						ht = 0;
 					}
-
 					ht = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)RtpServer, this, 0, 0);
 					if (ht) {
 						CloseHandle(ht);
 					}
+#else
+					pthread_t pid = 0;
+					pthread_create(&pid,0,RtcpServer,this);
+					pthread_create(&pid,0,RtpServer,this);
+#endif
 				}
 				else {
 					tranport = GetTransport(0);
@@ -299,6 +343,7 @@ int RtspServer::ProcessRtsp(int sc) {
 				char* ptr = buf + sendLen;
 				RtspHeader* rtsp = (RtspHeader*)ptr;
 				if (rtsp->magic != 0x24) {
+					printf("%s file format error\r\n", __FUNCTION__);
 					break;
 				}
 
@@ -332,9 +377,7 @@ int RtspServer::ProcessRtsp(int sc) {
 					}
 
 					//int recvLen = recv(sock, (char*)rtsp, 0x1000, 0);
-
 					ptr = ptr + sizeof(RtspHeader) + size;
-
 					//Sleep(100);
 				}		
 				
@@ -366,7 +409,9 @@ int RtspServer::ProcessRtsp(int sc) {
 				break;
 			}
 			else {
+
 			}
+
 			if (tcpPlay) {
 				//ret = SendRtpStream(PACKET_RSTP_FILENAME, sc);
 				tcpPlay = 0;
@@ -377,6 +422,8 @@ int RtspServer::ProcessRtsp(int sc) {
 		}
 	}
 	closesocket(sc);
+
+	printf("Send rtsp steam ok\r\n");
 	return 0;
 }
 
@@ -386,7 +433,7 @@ int RtspServer::Server(const char* fn) {
 
 	int ret = 0;
 
-	SOCKET s = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	int s = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (s == INVALID_SOCKET) {
 		perror("socket\r\n");
 		return -1;
@@ -395,15 +442,34 @@ int RtspServer::Server(const char* fn) {
 
 	sockaddr_in sa = { 0 };
 	sa.sin_family = AF_INET;
+	#ifdef _WIN32
 	sa.sin_addr.S_un.S_addr = INADDR_ANY;
+	#else
+	sa.sin_addr.s_addr = INADDR_ANY;
+	#endif
 	sa.sin_port = ntohs(m_port);
 
-	ret = bind(s, (sockaddr*)&sa, sizeof(sockaddr_in));
-	if (ret) {
-		closesocket(s);
-		perror("bind\r\n");
-		return -1;
-	}
+	do{
+		ret = bind(s, (sockaddr*)&sa, sizeof(sockaddr_in));
+		if (ret) {
+			perror("bind\r\n");
+			
+			
+			#ifdef _WIN32
+			closesocket(s);
+			return -1;
+			#else
+			sleep(3);
+			KillMonolith();
+			
+			#endif
+
+		}
+		else{
+			printf("bind ok\r\n");
+			break;
+		}
+	}while(ret);
 
 	ret = listen(m_sock, 4);
 	if (ret) {
@@ -414,7 +480,7 @@ int RtspServer::Server(const char* fn) {
 
 	while (1) {
 		sockaddr_in sac;
-		int saSize = sizeof(sockaddr_in);
+		socklen_t saSize = sizeof(sockaddr_in);
 		int sc = accept(s, (sockaddr*)&sac, &saSize);
 		if (sc != -1) {
 			

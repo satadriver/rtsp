@@ -1,11 +1,21 @@
 
 #include <iostream>
 
-#include "rtsp.h"
+
 #include "packet.h"
 
 #include "http.h"
 #include "fileUtils.h"
+
+#ifdef _WIN32
+#else
+//#include <netinet/in.h>
+//#include <arpa/inet.h>
+#include <arpa/inet.h>
+#endif
+
+#include "rtsp.h"
+
 
 using namespace std;
 

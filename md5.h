@@ -1,4 +1,4 @@
-#pragma once
+
 #pragma once
 /* MD5.H - header file for MD5.C
  */

@@ -1,11 +1,14 @@
-#pragma once
-
 
 #pragma once
 
 
-#include <windows.h>
+#ifdef _WIN32
+#else
+#include <cstring>
+#endif
 #include <iostream>
+
+#include "public.h"
 
 
 

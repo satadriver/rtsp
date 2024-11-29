@@ -1,7 +1,13 @@
 #pragma once
 
 
+#ifdef _WIN32
 #include <winsock.h>
+#else
+#include <sys/types.h> 
+#include <sys/socket.h>
+#endif
+
 #include <iostream>
 
 #pragma pack(1)
@@ -25,12 +31,16 @@ typedef struct {
 class RtspClient {
 public:
 
-	RtspClient(int type,const char* ip, int port);
+	RtspClient(int type,const char* ip, int port,int seconds = 0);
 	~RtspClient();
 
+#ifdef _WIN32
 	int __stdcall UdpClient(char* data, int size,char * recvBuf,int recvLen);
-
 	int __stdcall TcpClient(char * data,int size,char * recvBuf,int recvLen);
+#else
+	int __attribute__((__stdcall__)) UdpClient(char* data, int size,char * recvBuf,int recvLen);
+	int __attribute__((__stdcall__)) TcpClient(char * data,int size,char * recvBuf,int recvLen);
+#endif
 
 	int Authority(char* sendBuf, int sendLen, char* recvBuf, int recvLen,int seq);
 
@@ -38,13 +48,19 @@ public:
 
 	int Client(const char * fn);
 
-	int m_port;
-	std::string m_ip;
-	int m_type;
-	std::string m_session;
-	std::string m_ssrc;
-	SOCKET m_sock;
+	int m_type = 0;
 
-	//__int64 m_time;
-	std::string m_auth;
+	int m_port=0;
+
+	std::string m_ip="";
+	
+	std::string m_session="";
+
+	std::string m_ssrc="";
+
+	int m_sock = 0;
+
+	int m_seconds = 0;
+
+	std::string m_auth="";
 };

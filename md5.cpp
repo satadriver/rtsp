@@ -333,8 +333,7 @@ static void MD5_memset(POINTER output, int value, UINT len)
 
 int MD5File(const char* filename, MD5 digest)
 {
-    FILE* file = NULL;
-    fopen_s(&file, filename, "rb");
+    FILE* file = fopen(filename, "rb");
     if (!file)
         return -1;
 
@@ -406,5 +405,5 @@ void MD5String(MD5 digest, MD5_STR mdstr)
 {
     unsigned int i, j = 0;
     for (i = 0; i < MD5_VALUE_LEN; i++)
-        j += sprintf_s(mdstr + j, MD5_STRING_LEN - j, "%02x", digest[i]);
+        j += sprintf(mdstr + j,  "%02x", digest[i]);
 }

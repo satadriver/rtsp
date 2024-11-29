@@ -48,9 +48,6 @@
     <ClCompile Include="rtsp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="h264.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="rtspServer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>

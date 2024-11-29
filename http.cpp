@@ -5,6 +5,7 @@
 #include <vector>
 #include "public.h"
 
+#include <cstring>
 
 using namespace std;
 
@@ -81,7 +82,7 @@ string GetHeaderValue(const char* lphttphdr, string  searchkey) {
 string GetHttpHeader(const char* data, int len, char** lphttpdata) {
 
 	char* lphdr = strstr((char*)data, "\r\n\r\n");
-	if (lphdr <= FALSE)
+	if (lphdr == FALSE)
 	{
 		*lphttpdata = 0;
 		return string(data);

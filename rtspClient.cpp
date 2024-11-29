@@ -1,5 +1,18 @@
 
+#ifdef _WIN32
 #include <winsock.h>
+#else
+#include <sys/types.h> 
+#include <sys/socket.h>
+#include <unistd.h>
+#include <netinet/in.h>
+#include <pthread.h>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#define closesocket close
+#endif
+
+#include "public.h"
 #include <iostream>
 #include "rtspClient.h"
 #include "packet.h"
@@ -14,70 +27,34 @@
 using namespace std;
 
 
-
-
-
 #pragma comment(lib,"ws2_32.lib")
 
 
 
-
-RtspClient::RtspClient(int type,const char * ip,int port) {
+RtspClient::RtspClient(int type,const char * ip,int port,int seconds) {
+	int ret = 0;
+	#ifdef _WIN32
 	WSADATA wsa = { 0 };
-	int ret = WSAStartup(0x0202, &wsa);
+	ret = WSAStartup(0x0202, &wsa);
 	if (ret) {
 		perror("WSAStartup error\r\n");
 	}
+	#endif
 	m_ip = ip;
 	m_port = port;
 	m_type = type;
 	m_session = ""; 
 	m_ssrc = "";
+	m_seconds = seconds;
 }
 
 
 RtspClient::~RtspClient() {
+#ifdef _WIN32
 	WSACleanup();
+#endif
 }
 
-
-int __stdcall RtspClient::UdpClient(char* sendBuf, int sendLen,char * recvBuf,int recvLen) {
-
-	int ret = 0;
-
-	SOCKET s = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	if (s == INVALID_SOCKET) {
-		perror("socket error\r\n");
-		return -1;
-	}
-
-	sockaddr_in sa = { 0 };
-	sa.sin_family = AF_INET;
-	sa.sin_addr.S_un.S_addr = inet_addr(m_ip.c_str());
-	sa.sin_port = ntohs(m_port);
-
-	ret = sendto(s, (char*)sendBuf, sendLen, 0, (sockaddr*)&sa, sizeof(sockaddr_in));
-	if (ret > 0) {
-		int addrsize = sizeof(sockaddr_in);
-		sockaddr_in saClient = { 0 };
-		int recvlen = recvfrom(s, recvBuf, recvLen, 0, (sockaddr*)&saClient, &addrsize);
-		if (recvlen > 0) {
-			recvBuf[recvlen] = 0;
-			closesocket(s);
-			return recvlen;
-		}
-		else {
-			perror("recvfrom error\r\n");
-		}
-	}
-	else {
-		perror("sendto error\r\n");
-	}
-
-	closesocket(s);
-
-	return 0;
-}
 
 
 int RtspClient::GetReplyInfo(const char* recvBuf, int size,int seq) {
@@ -135,8 +112,8 @@ int RtspClient::Authority(char* sendBuf, int sendLen, char* recvBuf, int recvLim
 	int methodLen = GetUrlCmd(sendBuf);
 	string method = string(sendBuf, methodLen - 1);
 
-	const char* pass = "pass";
-	const char* username = "root";
+	const char* pass = OBJECT_PASSWORD;
+	const char* username = OBJECT_USERNAME;
 	if (user == "") {
 		user = username;
 	}
@@ -188,6 +165,7 @@ int RtspClient::Authority(char* sendBuf, int sendLen, char* recvBuf, int recvLim
 
 	int sendAuthLen = send(m_sock, strAuth, authLen, 0);
 	if (sendAuthLen <= 0) {
+		printf("%s send length:%d error\r\n", __FUNCTION__, sendAuthLen);
 		return 0;
 	}
 	FWriter(PACKET_CMD_FILENAME, strAuth, authLen, 0);
@@ -198,6 +176,7 @@ int RtspClient::Authority(char* sendBuf, int sendLen, char* recvBuf, int recvLim
 		recvBuf[recvLen] = 0;
 		const char* successResponse = "RTSP/1.0 200 OK\r\n";
 		if ( memcmp(recvBuf, successResponse, strlen(successResponse))!= 0 ) {
+			printf("%s recv illegle rtsp:%s\r\n",__FUNCTION__,recvBuf);
 			return 0;
 		}
 		GetReplyInfo(recvBuf, recvLen, seq);
@@ -205,7 +184,7 @@ int RtspClient::Authority(char* sendBuf, int sendLen, char* recvBuf, int recvLim
 		return recvLen;
 	}
 	else {
-		perror("recv\r\n");	
+		printf("%s recv length:%d error\r\n", __FUNCTION__, recvLen);
 	}
 
 	return 0;	
@@ -218,7 +197,7 @@ int RtspClient::Client(const char * fn) {
 
 	srand((unsigned int)time(0));
 
-	SOCKET s = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	int s = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (s == INVALID_SOCKET) {
 		perror("socket\r\n");
 		return -1;
@@ -227,7 +206,13 @@ int RtspClient::Client(const char * fn) {
 
 	sockaddr_in sa = { 0 };
 	sa.sin_family = AF_INET;
+	
+	#ifdef _WIN32
 	sa.sin_addr.S_un.S_addr = inet_addr(m_ip.c_str());
+	#else
+	sa.sin_addr.s_addr = inet_addr(m_ip.c_str());
+	#endif
+
 	sa.sin_port = ntohs(m_port);
 
 	ret = connect(s, (sockaddr*)&sa, sizeof(sockaddr_in));
@@ -299,6 +284,7 @@ int RtspClient::Client(const char * fn) {
 		if (memcmp(recvBuf, unAuthority, strlen(unAuthority)) == 0) {
 			recvLen = Authority(sendBuf, sendLen, recvBuf, recvLimit,seq);
 			if (recvLen <= 0) {
+				printf("%s Authority error\r\n", __FUNCTION__);
 				break;
 			}
 		}
@@ -313,6 +299,8 @@ int RtspClient::Client(const char * fn) {
 		}
 	}
 #define H264_FRAME_LIMIT 0x400
+
+	int timeNow = time(0);
 	
 	if (seq == 4) {
 
@@ -322,8 +310,8 @@ int RtspClient::Client(const char * fn) {
 		int videoLimit = 0x100000;
 		char* videoBuf = new char[0x100000];
 		int cnt = 0;
-		while (cnt < H264_FRAME_LIMIT) {
-			
+		while (time(0) - timeNow <= m_seconds) 
+		{
 			int videoLen = recv(s, videoBuf, videoLimit - 1, 0);
 			if (videoLen > 0 && videoLen < videoLimit) {
 				videoBuf[videoLen] = 0;
@@ -334,7 +322,13 @@ int RtspClient::Client(const char * fn) {
 				break;
 			}
 			cnt++;
+			printf("Get rtsp frame:%d,size:%d\r\n", cnt, videoLen);
 		}
+
+		sendLen = sprintf(sendBuf, g_strTeardownAuth,"TEARDOWN", m_ip.c_str(), cseq++, m_auth.c_str(),
+			(char*)m_session.c_str());
+		int sendlen = send(s, sendBuf, sendLen, 0);
+
 		delete[]videoBuf;
 
 		ret = ParseRtpStream(PACKET_RSTP_FILENAME, fn);
@@ -346,11 +340,17 @@ int RtspClient::Client(const char * fn) {
 }
 
 
-int __stdcall RtspClient::TcpClient(char * sendBuf,int sendLen,char * recvBuf,int recvLen) {
+	
+#ifdef _WIN32
+int __stdcall RtspClient::TcpClient(char * sendBuf,int sendLen,char * recvBuf,int recvLen) 
+#else
+int __attribute__((__stdcall__)) RtspClient::TcpClient(char * sendBuf,int sendLen,char * recvBuf,int recvLen)
+#endif
+{
 
 	int ret = 0;
 
-	SOCKET s = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	int s = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (s == INVALID_SOCKET) {
 		perror("socket\r\n");
 		return -1;
@@ -359,7 +359,13 @@ int __stdcall RtspClient::TcpClient(char * sendBuf,int sendLen,char * recvBuf,in
 
 	sockaddr_in sa = { 0 };
 	sa.sin_family = AF_INET;
+	
+	#ifdef _WIN32
 	sa.sin_addr.S_un.S_addr = inet_addr(m_ip.c_str());
+	#else
+	sa.sin_addr.s_addr = inet_addr(m_ip.c_str());
+	#endif
+
 	sa.sin_port = ntohs(m_port);
 
 	ret = connect(s, (sockaddr*)&sa, sizeof(sockaddr_in));
@@ -387,4 +393,52 @@ int __stdcall RtspClient::TcpClient(char * sendBuf,int sendLen,char * recvBuf,in
 	closesocket(s);
 
 	return len;
+}
+
+#ifdef _WIN32
+int __stdcall RtspClient::UdpClient(char* sendBuf, int sendLen, char* recvBuf, int recvLen)
+#else
+int __attribute__((__stdcall__)) RtspClient::UdpClient(char* sendBuf, int sendLen, char* recvBuf, int recvLen)
+#endif
+{
+
+	int ret = 0;
+
+	int s = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	if (s == INVALID_SOCKET) {
+		perror("socket error\r\n");
+		return -1;
+	}
+
+	sockaddr_in sa = { 0 };
+	sa.sin_family = AF_INET;
+#ifdef _WIN32
+	sa.sin_addr.S_un.S_addr = inet_addr(m_ip.c_str());
+#else
+	sa.sin_addr.s_addr = inet_addr(m_ip.c_str());
+#endif
+
+	sa.sin_port = ntohs(m_port);
+
+	ret = sendto(s, (char*)sendBuf, sendLen, 0, (sockaddr*)&sa, sizeof(sockaddr_in));
+	if (ret > 0) {
+		socklen_t addrsize = sizeof(sockaddr_in);
+		sockaddr_in saClient = { 0 };
+		int recvlen = recvfrom(s, recvBuf, recvLen, 0, (sockaddr*)&saClient, &addrsize);
+		if (recvlen > 0) {
+			recvBuf[recvlen] = 0;
+			closesocket(s);
+			return recvlen;
+		}
+		else {
+			perror("recvfrom error\r\n");
+		}
+	}
+	else {
+		perror("sendto error\r\n");
+	}
+
+	closesocket(s);
+
+	return 0;
 }
