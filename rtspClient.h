@@ -63,4 +63,7 @@ public:
 	int m_seconds = 0;
 
 	std::string m_auth="";
+
+	std::string m_seq = "";
+	std::string m_ts = "";
 };

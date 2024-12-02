@@ -77,7 +77,11 @@ typedef struct tagH265NalHeader
     uint8_t Tid : 3;       /* set to nal type */
 } H265NalHeader;
 
-
+typedef struct {
+    unsigned int size;
+    unsigned int tsOffset;
+    char data[0];
+}LzyHeader;
 
 #pragma pack()
 
@@ -87,3 +91,4 @@ int ParseRtpStream(const char* sfn, const char* dfn);
 
 int SendRtpStream(const char* sfn, int sock);
 
+int LzyFormat(const char* sfn, const char* dfn, unsigned long long ts);

@@ -247,7 +247,7 @@ RtspServer * instance = (RtspServer *)param;
 
 
 
-string RtspServer::GetTransport(int type) {
+string RtspServer::GetTransport(int type,int port1,int port2) {
 	char str[1024];
 	const char* formatT = "RTP/AVP/TCP;unicast;interleaved=0-1;ssrc=%s;mode=\"PLAY\"";
 	const char* formatU = "RTP/AVP;unicast;client_port=%u-%u;server_port=%u-%u;ssrc=%s;mode=\"PLAY\"";
@@ -255,7 +255,7 @@ string RtspServer::GetTransport(int type) {
 		sprintf(str, formatT,m_ssrc.c_str());
 	}
 	else {
-		sprintf(str, formatU,m_udpPort1, m_udpPort2, g_servUdpPort1,g_servUdpPort2, m_ssrc.c_str());
+		sprintf(str, formatU, port1, port1, g_servUdpPort1,g_servUdpPort2, m_ssrc.c_str());
 	}
 	return str;
 }
@@ -274,7 +274,18 @@ string GetCSeq(char* recvBuf, int recvLen) {
 	return cseq;
 }
 
-int RtspServer::ProcessRtsp(int sc) {
+#ifdef _WIN32
+void* __stdcall RtspServer::ProcessRtsp(void* param)
+#else
+void* __attribute__((__stdcall__)) RtspServer::ProcessRtsp(void* param)
+#endif 
+{
+	RtspThreadParam* rtspParm = (RtspThreadParam*)param;
+	int sc = (int)rtspParm->sc;
+	RtspServer* server = rtspParm->ptr;
+
+	int udpPort1 = 0;
+	int udpPort2 = 0;
 	char sendBuf[0x1000];
 	char recvBuf[0x1000];
 	int ret = 0;
@@ -304,17 +315,17 @@ int RtspServer::ProcessRtsp(int sc) {
 					p = ports.find("-");
 					string port1 = ports.substr(0, p);
 					string port2 = ports.substr(p + 1);
-					m_udpPort1 = atoi(port1.c_str());
-					m_udpPort2 = atoi(port2.c_str());
-					tranport = GetTransport(1);
-					m_type = 1;
+					udpPort1 = atoi(port1.c_str());
+					udpPort2 = atoi(port2.c_str());
+					tranport = server-> GetTransport(1,udpPort1,udpPort2);
+					server->m_type = 1;
 #ifdef _WIN32
-					HANDLE ht = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)RtcpServer, this, 0, 0);
+					HANDLE ht = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)RtcpServer, server, 0, 0);
 					if (ht) {
 						CloseHandle(ht);
 						ht = 0;
 					}
-					ht = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)RtpServer, this, 0, 0);
+					ht = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)RtpServer, server, 0, 0);
 					if (ht) {
 						CloseHandle(ht);
 					}
@@ -325,20 +336,20 @@ int RtspServer::ProcessRtsp(int sc) {
 #endif
 				}
 				else {
-					tranport = GetTransport(0);
-					m_type = 0;
+					tranport = server->GetTransport(0,0,0);
+					server->m_type = 0;
 				}
 
 				sendLen = sprintf(sendBuf, g_strSetupResponse, cseq.c_str(), tranport.c_str(), g_strSession);
 			}
 			else if (memcmp(recvBuf, "PLAY ", 5) == 0) {
 				string url = GetUrl(recvBuf);
-				string info = GetRTPInfo(url);
+				string info = server->GetRTPInfo(url);
 				sendLen = sprintf(sendBuf, g_strPlayResponse, cseq.c_str(), info.c_str(), g_strSession);
 
-				char* buf = new char[m_fs + 0x10000];
+				char* buf = new char[server->m_fs + 0x10000];
 				memcpy(buf, sendBuf, sendLen);
-				memcpy(buf + sendLen, m_data, m_dataSize);
+				memcpy(buf + sendLen, server->m_data, server->m_dataSize);
 
 				char* ptr = buf + sendLen;
 				RtspHeader* rtsp = (RtspHeader*)ptr;
@@ -356,7 +367,7 @@ int RtspServer::ProcessRtsp(int sc) {
 				}
 				ptr = ptr + sizeof(RtspHeader) + size;
 
-				while (ptr - buf < m_dataSize + sendLen)
+				while (ptr - buf < server->m_dataSize + sendLen)
 				{
 					RtspHeader* rtsp = (RtspHeader*)ptr;
 					if (rtsp->magic != 0x24) {
@@ -482,9 +493,16 @@ int RtspServer::Server(const char* fn) {
 		sockaddr_in sac;
 		socklen_t saSize = sizeof(sockaddr_in);
 		int sc = accept(s, (sockaddr*)&sac, &saSize);
-		if (sc != -1) {
-			
-			ret = ProcessRtsp(sc);
+		if (sc != -1) {		
+			RtspThreadParam* param = new RtspThreadParam;
+			param->sc = sc;
+			param->ptr = this;
+#ifdef _WIN32
+			CloseHandle(CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ProcessRtsp, param, 0, 0));
+#else
+			pthread_t pid = 0;
+			pthread_create(&pid, 0, ProcessRtsp, param);
+#endif
 		}
 		else {
 			closesocket(s);

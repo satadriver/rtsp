@@ -30,15 +30,17 @@ public:
 	static void * __stdcall RtcpServer(void*);
 
 	static void* __stdcall RtpServer(void*);
+	static void* __stdcall ProcessRtsp(void* param);
 #else
 	static void * __attribute__((__stdcall__))  RtcpServer(void*);
 
 	static void * __attribute__((__stdcall__))  RtpServer(void*);
+	static void* __attribute__((__stdcall__)) ProcessRtsp(void* sc);
 #endif
 
-	std::string GetTransport(int type);
+	std::string GetTransport(int type,int ,int);
 
-	int ProcessRtsp(int sc);
+	//int ProcessRtsp(int sc);
 
 	std::string GetRTPInfo(std::string url);
 
@@ -50,9 +52,6 @@ public:
 
 	int m_sock=0;
 
-	int m_udpPort1=0;
-	int m_udpPort2=0;
-
 	std::string m_seq="";
 	std::string m_rtpTime="";
 	std::string m_ssrc="";
@@ -62,3 +61,13 @@ public:
 	int m_fs=0;
 	int m_dataSize=0;
 };
+
+
+#pragma pack(1)
+
+typedef struct {
+	int sc;
+	RtspServer* ptr;
+}RtspThreadParam;
+
+#pragma pack()

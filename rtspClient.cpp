@@ -85,9 +85,15 @@ int RtspClient::GetReplyInfo(const char* recvBuf, int size,int seq) {
 		if (seq == "") {
 			seq = getstring((char*)"seq=", (char*)"", (char*)rtp.c_str());
 		}
+		if (seq != "") {
+			m_seq = seq;
+		}
 		string rtptime = getstring((char*)"rtptime=", (char*)";", (char*)rtp.c_str());
 		if (rtptime == "") {
 			rtptime = getstring((char*)"rtptime=", (char*)"", (char*)rtp.c_str());
+			if (rtptime != "") {
+				m_ts = rtptime;
+			}
 		}
 	}
 	return 0;
@@ -329,9 +335,15 @@ int RtspClient::Client(const char * fn) {
 			(char*)m_session.c_str());
 		int sendlen = send(s, sendBuf, sendLen, 0);
 
-		delete[]videoBuf;
+		
 
-		ret = ParseRtpStream(PACKET_RSTP_FILENAME, fn);
+		char* nextptr = 0;
+		unsigned long long ts = strtoll(m_ts.c_str(), &nextptr, 10);
+		ret = LzyFormat(PACKET_RSTP_FILENAME, fn, ts);
+
+		//ret = ParseRtpStream(PACKET_RSTP_FILENAME, fn);
+
+		delete[]videoBuf;
 	}
 
 	closesocket(s);

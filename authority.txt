@@ -1,1 +1,103 @@
 
+OPTIONS rtsp://192.168.1.101/axis-media/media.amp RTSP/1.0
+CSeq: 15441
+
+RTSP/1.0 200 OK
+CSeq: 15441
+Public: OPTIONS, DESCRIBE, ANNOUNCE, GET_PARAMETER, PAUSE, PLAY, RECORD, SETUP, SET_PARAMETER, TEARDOWN
+Server: GStreamer RTSP server
+Date: Mon, 02 Dec 2024 23:40:06 GMT
+
+DESCRIBE rtsp://192.168.1.101/axis-media/media.amp RTSP/1.0
+CSeq: 15442
+Accept: application/sdp
+
+RTSP/1.0 401 Unauthorized
+CSeq: 15442
+WWW-Authenticate: Digest realm="AXIS_B8A44F50BED8", nonce="00000fa8Y7590745645b46c80212b1f0a61bc97eab7184a", stale=FALSE
+Server: GStreamer RTSP server
+Date: Mon, 02 Dec 2024 23:40:06 GMT
+
+DESCRIBE rtsp://192.168.1.101/axis-media/media.amp RTSP/1.0
+CSeq: 15442
+Authorization: Digest username="root",realm="AXIS_B8A44F50BED8",nonce="00000fa8Y7590745645b46c80212b1f0a61bc97eab7184a",uri="rtsp://192.168.1.101/axis-media/media.amp",response="d0eea8ed6ff79d100a82f41d7e64fd2f"
+Accept: application/sdp
+
+RTSP/1.0 200 OK
+CSeq: 15442
+Content-Type: application/sdp
+Content-Base: rtsp://192.168.1.101/axis-media/media.amp/
+Server: GStreamer RTSP server
+Date: Mon, 02 Dec 2024 23:40:06 GMT
+Content-Length: 779
+
+v=0
+o=- 14099460845983342986 1 IN IP4 192.168.1.101
+s=Session streamed with GStreamer
+i=rtsp-server
+t=0 0
+a=tool:GStreamer
+a=type:broadcast
+a=range:npt=now-
+a=control:rtsp://192.168.1.101/axis-media/media.amp
+m=video 0 RTP/AVP 96
+c=IN IP4 0.0.0.0
+b=AS:51200
+a=rtpmap:96 H264/90000
+a=fmtp:96 packetization-mode=1;profile-level-id=640029;sprop-parameter-sets=Z2QAKa0AxSAeAIn5ZuAgIDSgAQesADN/mAHiRFQ=,aO48sA==
+a=ts-refclk:local
+a=mediaclk:sender
+a=x-onvif-track:VIDEO000
+a=recvonly
+a=control:rtsp://192.168.1.101/axis-media/media.amp/stream=0
+a=framerate:25.000000
+a=transform:1.000000,0.000000,0.000000;0.000000,1.000000,0.000000;0.000000,0.000000,1.000000
+a=x-sensor-transform:1.000000,0.000000,0.000000;0.000000,1.000000,0.000000;0.000000,0.000000,1.000000
+SETUP rtsp://192.168.1.101/axis-media/media.amp RTSP/1.0
+CSeq: 15443
+Transport: RTP/AVP/TCP;unicast;interleaved=0-1
+
+RTSP/1.0 401 Unauthorized
+CSeq: 15443
+WWW-Authenticate: Digest realm="AXIS_B8A44F50BED8", nonce="00000fa8Y8633803db12a7ce4db94d6b528585179678f7a", stale=FALSE
+Server: GStreamer RTSP server
+Date: Mon, 02 Dec 2024 23:40:06 GMT
+
+SETUP rtsp://192.168.1.101/axis-media/media.amp RTSP/1.0
+CSeq: 15443
+Authorization: Digest username="root",realm="AXIS_B8A44F50BED8",nonce="00000fa8Y8633803db12a7ce4db94d6b528585179678f7a",uri="rtsp://192.168.1.101/axis-media/media.amp",response="7e85313af6c08497f766218876ba59a2"
+Transport: RTP/AVP/TCP;unicast;interleaved=0-1
+
+RTSP/1.0 200 OK
+CSeq: 15443
+Transport: RTP/AVP/TCP;unicast;interleaved=0-1;ssrc=4EA7835B;mode="PLAY"
+Server: GStreamer RTSP server
+Session: MO9uY..Qgtxl.q55;timeout=60
+Date: Mon, 02 Dec 2024 23:40:06 GMT
+
+PLAY rtsp://192.168.1.101/axis-media/media.amp RTSP/1.0
+CSeq: 15444
+Range: npt=0.000-
+Session: MO9uY..Qgtxl.q55
+
+RTSP/1.0 401 Unauthorized
+CSeq: 15444
+WWW-Authenticate: Digest realm="AXIS_B8A44F50BED8", nonce="00000fa8Y871807caaa8034512a9695d0b129071ff512a8", stale=FALSE
+Server: GStreamer RTSP server
+Session: MO9uY..Qgtxl.q55;timeout=60
+Date: Mon, 02 Dec 2024 23:40:06 GMT
+
+PLAY rtsp://192.168.1.101/axis-media/media.amp RTSP/1.0
+CSeq: 15444
+Authorization: Digest username="root",realm="AXIS_B8A44F50BED8",nonce="00000fa8Y871807caaa8034512a9695d0b129071ff512a8",uri="rtsp://192.168.1.101/axis-media/media.amp",response="fc147cff806392b9dd53e40377624afe"
+Range: npt=now-
+Session: MO9uY..Qgtxl.q55
+
+RTSP/1.0 200 OK
+CSeq: 15444
+RTP-Info: url=rtsp://192.168.1.101/axis-media/media.amp;seq=14027;rtptime=1147454482
+Range: npt=now-
+Server: GStreamer RTSP server
+Session: MO9uY..Qgtxl.q55;timeout=60
+Date: Mon, 02 Dec 2024 23:40:06 GMT
+
