@@ -54,6 +54,9 @@ public:
 	char* m_data=0;
 	int m_fs=0;
 	int m_dataSize=0;
+
+	char* m_playOffset = 0;
+	int m_play_tag = 0;
 };
 
 

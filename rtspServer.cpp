@@ -115,6 +115,8 @@ RtspServer::RtspServer(const char* port,const char * fn ) {
 
 	char* rtpdata = (char*)data + sizeof(RtpHeader);
 	int rtpds = size - sizeof(RtpHeader);
+
+	m_playOffset = m_data;
 }
 
 
@@ -355,6 +357,8 @@ void* __attribute__((__stdcall__)) RtspServer::ProcessRtsp(void* param)
 				sendLen = sprintf(sendBuf, g_strPlayResponse, cseq.c_str(), info.c_str(), g_strSession);
 				sl = send(sc, (char*)sendBuf, sendLen, 0);
 
+				printf("send PLAY response:%s\r\n", sendBuf);
+
 				int type = Contain(recvBuf, "ptz=all");
 				if (type) {
 					char* playResp = 0;
@@ -366,37 +370,61 @@ void* __attribute__((__stdcall__)) RtspServer::ProcessRtsp(void* param)
 				}
 				else
 				{
-					sl = send(sc, server->m_data, server->m_dataSize,0);
-					/*
-					char* ptr = server->m_data;
-					while (ptr - server->m_data < server->m_dataSize )
-					{
-						RtspHeader* rtsp = (RtspHeader*)ptr;
-						if (rtsp->magic != 0x24) {
-							break;
-						}
+						//while (1) 
+						{
+							if (0) {
+								sl = send(sc, server->m_data, server->m_dataSize, 0);
+								//sl = recv(sc, recvBuf, recvLimit, 0);
+							}
+							else {
+								int cnt = 0;
+								char* ptr = server->m_data;
 
-						int size = ntohs(rtsp->length);
+								while (ptr - server->m_data < server->m_dataSize)
+								{
+									RtspHeader* rtsp = (RtspHeader*)ptr;
+									if (rtsp->magic != 0x24) {
+										break;
+									}
 
-						RtpHeader* rtp = (RtpHeader*)(ptr + sizeof(RtspHeader));
+									int size = ntohs(rtsp->length);
 
-						char* rtpdata = (char*)rtp + sizeof(RtpHeader);
-						int rtpds = size - sizeof(RtpHeader);
+									RtpHeader* rtp = (RtpHeader*)(ptr + sizeof(RtspHeader));
 
-						sl = send(sc, (char*)rtsp, sizeof(RtspHeader) + size, 0);
-						if (sendLen <= 0) {
-							perror("send\r\n");
-							break;
-						}
+									char* rtpdata = (char*)rtp + sizeof(RtpHeader);
+									int rtpds = size - sizeof(RtpHeader);
 
-						ptr = ptr + sizeof(RtspHeader) + size;
+									sl = send(sc, (char*)rtsp, sizeof(RtspHeader) + size, 0);
+									if (sl <= 0) {
+										perror("send\r\n");
+										break;
+									}
+
+									ptr = ptr + sizeof(RtspHeader) + size;
+
+									cnt++;
+									if (cnt >= 10000 / 400) {
+										server->m_playOffset = ptr;
+										//break;
+									}
 #ifdef _WIN32
-						Sleep(20);
+									//Sleep(400);
 #else
-						usleep(20000);
+									//usleep(400000);
 #endif
-					}
-					*/
+									//break;
+								}
+							}
+						}
+
+#ifdef _WIN32
+						//Sleep(3000);
+#else
+						//sleep(3);
+#endif
+
+						break;
+					
 				}
 			}
 			else if (memcmp(recvBuf, "DESCRIBE ", 9) == 0) {
@@ -425,6 +453,7 @@ void* __attribute__((__stdcall__)) RtspServer::ProcessRtsp(void* param)
 			}
 		
 			if (sl <= 0) {
+				printf("%s send error\r\n", __FUNCTION__);
 				perror("send\r\n");
 				break;
 			}
@@ -433,6 +462,7 @@ void* __attribute__((__stdcall__)) RtspServer::ProcessRtsp(void* param)
 			}
 		}
 		else {
+			printf("%s recv error\r\n", __FUNCTION__);
 			perror("recv");
 			break;
 		}
@@ -501,21 +531,29 @@ int RtspServer::Server(const char* fn) {
 		socklen_t saSize = sizeof(sockaddr_in);
 		int sc = accept(s, (sockaddr*)&sac, &saSize);
 		if (sc != -1) {
-			RtspThreadParam * param = new RtspThreadParam;
-			param->sc = sc;
-			param->ptr = this;
+			if (1) 
+			{
+				RtspThreadParam* param = new RtspThreadParam;
+				param->sc = sc;
+				param->ptr = this;
 #ifdef _WIN32
-			HANDLE ht = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ProcessRtsp, param, 0, 0);
-			if (ht) {
-				CloseHandle(ht);
-			}
+				HANDLE ht = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ProcessRtsp, param, 0, 0);
+				if (ht) {
+					CloseHandle(ht);
+				}
 #else
-			pthread_t pid = 0;
-			pthread_create(&pid, 0, ProcessRtsp, param);
+				pthread_t pid = 0;
+				pthread_create(&pid, 0, ProcessRtsp, param);
 #endif
+			}
+			else {
+				closesocket(sc);
+			}
 		}
 		else {
-			closesocket(s);
+			printf("%s accept error\r\n",__FUNCTION__);
+			perror("accept");
+
 			break;
 		}
 	}

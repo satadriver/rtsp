@@ -300,8 +300,6 @@ int RtspClient::Client(const char * fn) {
 
 		const char* successResponse = "RTSP/1.0 200 OK\r\n";
 
-		
-
 		if (memcmp(recvBuf, unAuthority, strlen(unAuthority)) == 0) {
 			recvLen = Authority(sendBuf, sendLen, recvBuf, recvLimit,seq);
 			if (recvLen <= 0) {
