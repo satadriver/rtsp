@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\vsProject\RtspTest\x64\Debug\Rtsp.exe</FullPath>
+      <FullPath>D:\vsProject\rtsp\x64\Debug\Rtsp.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

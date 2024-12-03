@@ -367,6 +367,36 @@ void* __attribute__((__stdcall__)) RtspServer::ProcessRtsp(void* param)
 				else
 				{
 					sl = send(sc, server->m_data, server->m_dataSize,0);
+					/*
+					char* ptr = server->m_data;
+					while (ptr - server->m_data < server->m_dataSize )
+					{
+						RtspHeader* rtsp = (RtspHeader*)ptr;
+						if (rtsp->magic != 0x24) {
+							break;
+						}
+
+						int size = ntohs(rtsp->length);
+
+						RtpHeader* rtp = (RtpHeader*)(ptr + sizeof(RtspHeader));
+
+						char* rtpdata = (char*)rtp + sizeof(RtpHeader);
+						int rtpds = size - sizeof(RtpHeader);
+
+						sl = send(sc, (char*)rtsp, sizeof(RtspHeader) + size, 0);
+						if (sendLen <= 0) {
+							perror("send\r\n");
+							break;
+						}
+
+						ptr = ptr + sizeof(RtspHeader) + size;
+#ifdef _WIN32
+						Sleep(20);
+#else
+						usleep(20000);
+#endif
+					}
+					*/
 				}
 			}
 			else if (memcmp(recvBuf, "DESCRIBE ", 9) == 0) {
@@ -449,7 +479,7 @@ int RtspServer::Server(const char* fn) {
 			closesocket(s);
 			return -1;
 #else
-			sleep(3);
+			sleep(1);
 			KillMonolith();		
 #endif
 		}

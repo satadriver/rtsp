@@ -129,7 +129,7 @@ void KillProcess(vector<string> pids, vector<string>& pids_failed) {
 
             //if (isRunning(num) == 0) 
             {
-                printf("%d is running,start to kill it\n", num);
+                //printf("%d is running,start to kill it\n", num);
                 int retval = kill(num, SIGKILL);  //发送SIGKILL信号给进程，要求其停止运行
                 if (retval < 0)   //判断是否发生信号
                 {
