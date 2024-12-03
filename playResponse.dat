@@ -1,0 +1,1055 @@
+$.....p..Pq.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+</tt:MetadataStream>
+$..U..p	.PoDVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.552896" y="-0.441377" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.000000" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>IDLE</tt:PanTilt>
+    <tt:Zoom>IDLE</tt:Zoom>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:05.743443Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p
+.P..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:Event><wsnt:NotificationMessage xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:tnsaxis="http://www.axis.com/2009/event/topics" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa5="http://www.w3.org/2005/08/addressing"><wsnt:Topic Dialect="http://docs.oasis-open.org/wsn/t-1/TopicExpression/Simple">tns1:VideoSource/GlobalSceneChange/ImagingService</wsnt:Topic><wsnt:ProducerReference><wsa5:Address>uri://25ec1bd5-605e-45aa-abe9-a800a6080a55/ProducerReference</wsa5:Address></wsnt:ProducerReference><wsnt:Message><tt:Message UtcTime="2024-11-21T13:18:41.920399Z" PropertyOperation="Initialized"><tt:Source><tt:SimpleItem Name="Source" Value="0"/></tt:Source><tt:Key></tt:Key><tt:Data><tt:SimpleItem Name="State" Value="0"/></tt:Data></tt:Message></wsnt:Message></wsnt:NotificationMessage></tt:Event></tt:MetadataStream>
+$..|..p..P..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:Event><wsnt:NotificationMessage xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:tnsaxis="http://www.axis.com/2009/event/topics" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa5="http://www.w3.org/2005/08/addressing"><wsnt:Topic Dialect="http://docs.oasis-open.org/wsn/t-1/TopicExpression/Simple">tnsaxis:Storage/Recording</wsnt:Topic><wsnt:ProducerReference><wsa5:Address>uri://25ec1bd5-605e-45aa-abe9-a800a6080a55/ProducerReference</wsa5:Address></wsnt:ProducerReference><wsnt:Message><tt:Message UtcTime="2024-11-21T18:45:57.616301Z" PropertyOperation="Initialized"><tt:Source></tt:Source><tt:Key></tt:Key><tt:Data><tt:SimpleItem Name="recording" Value="0"/></tt:Data></tt:Message></wsnt:Message></wsnt:NotificationMessage></tt:Event></tt:MetadataStream>
+$.....p..P..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:Event><wsnt:NotificationMessage xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:tnsaxis="http://www.axis.com/2009/event/topics" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa5="http://www.w3.org/2005/08/addressing"><wsnt:Topic Dialect="http://docs.oasis-open.org/wsn/t-1/TopicExpression/Simple">tns1:PTZController/tnsaxis:Move/Channel_1</wsnt:Topic><wsnt:ProducerReference><wsa5:Address>uri://25ec1bd5-605e-45aa-abe9-a800a6080a55/ProducerReference</wsa5:Address></wsnt:ProducerReference><wsnt:Message><tt:Message UtcTime="2024-11-21T17:37:27.276872Z" PropertyOperation="Initialized"><tt:Source><tt:SimpleItem Name="PTZConfigurationToken" Value="1"/></tt:Source><tt:Key></tt:Key><tt:Data><tt:SimpleItem Name="is_moving" Value="0"/></tt:Data></tt:Message></wsnt:Message></wsnt:NotificationMessage></tt:Event></tt:MetadataStream>
+$.....p
+.P.fVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:Event><wsnt:NotificationMessage xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:tnsaxis="http://www.axis.com/2009/event/topics" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa5="http://www.w3.org/2005/08/addressing"><wsnt:Topic Dialect="http://docs.oasis-open.org/wsn/t-1/TopicExpression/Simple">tns1:PTZController/tnsaxis:PTZPresets/Channel_1</wsnt:Topic><wsnt:ProducerReference><wsa5:Address>uri://25ec1bd5-605e-45aa-abe9-a800a6080a55/ProducerReference</wsa5:Address></wsnt:ProducerReference><wsnt:Message><tt:Message UtcTime="2024-11-21T17:37:20.074898Z" PropertyOperation="Initialized"><tt:Source><tt:SimpleItem Name="PresetToken" Value="-1"/></tt:Source><tt:Key></tt:Key><tt:Data><tt:SimpleItem Name="on_preset" Value="0"/></tt:Data></tt:Message></wsnt:Message></wsnt:NotificationMessage></tt:Event></tt:MetadataStream>
+$.....p..P..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:Event><wsnt:NotificationMessage xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:tnsaxis="http://www.axis.com/2009/event/topics" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa5="http://www.w3.org/2005/08/addressing"><wsnt:Topic Dialect="http://docs.oasis-open.org/wsn/t-1/TopicExpression/Simple">tns1:PTZController/tnsaxis:PTZPresets/Channel_1</wsnt:Topic><wsnt:ProducerReference><wsa5:Address>uri://25ec1bd5-605e-45aa-abe9-a800a6080a55/ProducerReference</wsa5:Address></wsnt:ProducerReference><wsnt:Message><tt:Message UtcTime="2024-11-21T17:37:20.074789Z" PropertyOperation="Initialized"><tt:Source><tt:SimpleItem Name="PresetToken" Value="1"/></tt:Source><tt:Key></tt:Key><tt:Data><tt:SimpleItem Name="on_preset" Value="0"/></tt:Data></tt:Message></wsnt:Message></wsnt:NotificationMessage></tt:Event></tt:MetadataStream>
+$.....p..P.GVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:Event><wsnt:NotificationMessage xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:tnsaxis="http://www.axis.com/2009/event/topics" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa5="http://www.w3.org/2005/08/addressing"><wsnt:Topic Dialect="http://docs.oasis-open.org/wsn/t-1/TopicExpression/Simple">tnsaxis:Storage/Disruption</wsnt:Topic><wsnt:ProducerReference><wsa5:Address>uri://25ec1bd5-605e-45aa-abe9-a800a6080a55/ProducerReference</wsa5:Address></wsnt:ProducerReference><wsnt:Message><tt:Message UtcTime="2024-11-21T13:18:46.346234Z" PropertyOperation="Initialized"><tt:Source><tt:SimpleItem Name="disk_id" Value="SD_DISK"/></tt:Source><tt:Key></tt:Key><tt:Data><tt:SimpleItem Name="disruption" Value="1"/></tt:Data></tt:Message></wsnt:Message></wsnt:NotificationMessage></tt:Event></tt:MetadataStream>
+$.....p..P..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:Event><wsnt:NotificationMessage xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:tnsaxis="http://www.axis.com/2009/event/topics" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa5="http://www.w3.org/2005/08/addressing"><wsnt:Topic Dialect="http://docs.oasis-open.org/wsn/t-1/TopicExpression/Simple">tnsaxis:Storage/Disruption</wsnt:Topic><wsnt:ProducerReference><wsa5:Address>uri://25ec1bd5-605e-45aa-abe9-a800a6080a55/ProducerReference</wsa5:Address></wsnt:ProducerReference><wsnt:Message><tt:Message UtcTime="2024-11-21T13:18:46.343511Z" PropertyOperation="Initialized"><tt:Source><tt:SimpleItem Name="disk_id" Value="NetworkShare"/></tt:Source><tt:Key></tt:Key><tt:Data><tt:SimpleItem Name="disruption" Value="1"/></tt:Data></tt:Message></wsnt:Message></wsnt:NotificationMessage></tt:Event></tt:MetadataStream>
+$.....p..P.)Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:Event><wsnt:NotificationMessage xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:tnsaxis="http://www.axis.com/2009/event/topics" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa5="http://www.w3.org/2005/08/addressing"><wsnt:Topic Dialect="http://docs.oasis-open.org/wsn/t-1/TopicExpression/Simple">tns1:Device/tnsaxis:IO/VirtualPort</wsnt:Topic><wsnt:ProducerReference><wsa5:Address>uri://25ec1bd5-605e-45aa-abe9-a800a6080a55/ProducerReference</wsa5:Address></wsnt:ProducerReference><wsnt:Message><tt:Message UtcTime="2024-11-21T13:18:43.219786Z" PropertyOperation="Initialized"><tt:Source><tt:SimpleItem Name="port" Value="1"/></tt:Source><tt:Key></tt:Key><tt:Data><tt:SimpleItem Name="state" Value="0"/></tt:Data></tt:Message></wsnt:Message></wsnt:NotificationMessage></tt:Event></tt:MetadataStream>
+$..P....Vp.....n..K..Q.{...
+........Vp....user2028239470@host-90c589a1.	GStreamer...$.....p..V.$Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:Event><wsnt:NotificationMessage xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:tnsaxis="http://www.axis.com/2009/event/topics" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa5="http://www.w3.org/2005/08/addressing"><wsnt:Topic Dialect="http://docs.oasis-open.org/wsn/t-1/TopicExpression/Simple">tns1:PTZController/tnsaxis:Move/Channel_1</wsnt:Topic><wsnt:ProducerReference><wsa5:Address>uri://25ec1bd5-605e-45aa-abe9-a800a6080a55/ProducerReference</wsa5:Address></wsnt:ProducerReference><wsnt:Message><tt:Message UtcTime="2024-11-21T18:46:10.381718Z" PropertyOperation="Changed"><tt:Source><tt:SimpleItem Name="PTZConfigurationToken" Value="1"/></tt:Source><tt:Key></tt:Key><tt:Data><tt:SimpleItem Name="is_moving" Value="1"/></tt:Data></tt:Message></wsnt:Message></wsnt:NotificationMessage></tt:Event></tt:MetadataStream>
+$.....p..V.EVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.553803" y="-0.441377" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>MOVING</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:10.416961Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p..V..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.555490" y="-0.441377" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:10.450163Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p..V..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.557209" y="-0.441377" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:10.483375Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p..V.jVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.558053" y="-0.441377" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:10.516936Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p..W	.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.559740" y="-0.441377" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:10.550186Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p..W..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.561459" y="-0.441377" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:10.583562Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p..W .Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.567147" y="-0.438807" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:10.616962Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p..W,NVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.578653" y="-0.435360" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:10.650315Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p..W7.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.596791" y="-0.430220" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:10.683535Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p..WC.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.608690" y="-0.426773" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:10.716773Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p..WObVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620235" y="-0.421814" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:10.750094Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p..W[.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.631702" y="-0.416371" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:10.783326Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p..Wf.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.637413" y="-0.413650" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:10.816928Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p .Wr.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.648894" y="-0.408238" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:10.850318Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p!.W~TVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.660265" y="-0.402795" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:10.883619Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p".W.
+Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.670329" y="-0.396173" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:10.916969Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p#.W..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.680301" y="-0.389483" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:10.950196Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p$.W.lVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.685229" y="-0.386077" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:10.983447Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p%.W.dVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.705056" y="-0.372389" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:11.017489Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p&.W..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.711677" y="-0.365233" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:11.050678Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p'.W..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.711202" y="-0.357952" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:11.083907Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p(.W.lVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.710191" y="-0.354358" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:11.117142Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p).W.#Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.708209" y="-0.347108" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:11.150380Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p*.W..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.706225" y="-0.339858" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:11.183706Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p+.W..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.700667" y="-0.333765" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:11.216933Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p,.W.0Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.691619" y="-0.327890" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:11.250160Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p-.X
+.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.686994" y="-0.324952" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:11.283396Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p..X..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.668486" y="-0.313202" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:11.316592Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p/.X"JVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.659177" y="-0.307327" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:11.350002Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p0.X..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.649896" y="-0.301452" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:11.383494Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p1.X:.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.640627" y="-0.295546" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:11.417496Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p2.XE.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.636046" y="-0.292609" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:11.450928Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p3.XQ.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.626737" y="-0.286734" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:11.484395Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p4.X]VVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620424" y="-0.283765" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:11.517941Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p5.Xi.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620018" y="-0.283765" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:11.551415Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$..9..p6.X.}Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:MoveStatus>
+    <tt:PanTilt>IDLE</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:11.617968Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p7.Y&~Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:Event><wsnt:NotificationMessage xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:tnsaxis="http://www.axis.com/2009/event/topics" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa5="http://www.w3.org/2005/08/addressing"><wsnt:Topic Dialect="http://docs.oasis-open.org/wsn/t-1/TopicExpression/Simple">tns1:PTZController/tnsaxis:Move/Channel_1</wsnt:Topic><wsnt:ProducerReference><wsa5:Address>uri://25ec1bd5-605e-45aa-abe9-a800a6080a55/ProducerReference</wsa5:Address></wsnt:ProducerReference><wsnt:Message><tt:Message UtcTime="2024-11-21T18:46:12.088066Z" PropertyOperation="Changed"><tt:Source><tt:SimpleItem Name="PTZConfigurationToken" Value="1"/></tt:Source><tt:Key></tt:Key><tt:Data><tt:SimpleItem Name="is_moving" Value="0"/></tt:Data></tt:Message></wsnt:Message></wsnt:NotificationMessage></tt:Event></tt:MetadataStream>
+$..P....Vp.....t...u.Y.c...0..]a....Vp....user2028239470@host-90c589a1.	GStreamer...$.....p8.Z3.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:Event><wsnt:NotificationMessage xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:tnsaxis="http://www.axis.com/2009/event/topics" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa5="http://www.w3.org/2005/08/addressing"><wsnt:Topic Dialect="http://docs.oasis-open.org/wsn/t-1/TopicExpression/Simple">tns1:PTZController/tnsaxis:Move/Channel_1</wsnt:Topic><wsnt:ProducerReference><wsa5:Address>uri://25ec1bd5-605e-45aa-abe9-a800a6080a55/ProducerReference</wsa5:Address></wsnt:ProducerReference><wsnt:Message><tt:Message UtcTime="2024-11-21T18:46:12.853009Z" PropertyOperation="Changed"><tt:Source><tt:SimpleItem Name="PTZConfigurationToken" Value="1"/></tt:Source><tt:Key></tt:Key><tt:Data><tt:SimpleItem Name="is_moving" Value="1"/></tt:Data></tt:Message></wsnt:Message></wsnt:NotificationMessage></tt:Event></tt:MetadataStream>
+$..5..p9.Z;/Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:MoveStatus>
+    <tt:Zoom>MOVING</tt:Zoom>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:12.877191Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$..x..p:.Z..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:Zoom x="0.001000" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:13.076027Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p;.Z..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.619854" y="-0.283549" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.001350" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:13.109288Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$..;..p<.Z..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620056" y="-0.283768" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.002100" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>MOVING</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:13.142674Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$..x..p=.Z.6Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:Zoom x="0.002850" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:13.175911Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p>.Z..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620003" y="-0.283649" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.003250" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:13.209122Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p?.Z..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620049" y="-0.283785" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:13.242383Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$..9..p@.Z..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:MoveStatus>
+    <tt:PanTilt>IDLE</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:13.341834Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....pA.Z.AVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.619769" y="-0.283313" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.006651" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:13.375140Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....pB.Z..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.619891" y="-0.283723" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>MOVING</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:13.408375Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$..x..pC.[
+CVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:Zoom x="0.007401" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:13.474721Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$..9..pD.[..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.619781" y="-0.283600" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.007551" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>IDLE</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:13.507949Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....pE.[$.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620031" y="-0.283762" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>MOVING</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:13.541146Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$..9..pF.[;.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:MoveStatus>
+    <tt:PanTilt>IDLE</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:13.607438Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$..;..pG.[G.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:MoveStatus>
+    <tt:PanTilt>MOVING</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:13.640641Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....pH.[SDVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620031" y="-0.283794" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.009901" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:13.673840Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....pI.[^.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.619841" y="-0.283489" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:13.707095Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$..9..pJ.[j.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.619702" y="-0.283312" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.010651" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>IDLE</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:13.740303Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$..;..pK.[vNVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620002" y="-0.283655" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.011751" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>MOVING</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:13.773508Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....pL.[..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.619833" y="-0.283662" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:13.806752Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....pM.[..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.619873" y="-0.283603" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.012551" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:13.839984Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....pN.[.WVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.619991" y="-0.283766" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:13.873169Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$..9..pO.[.NVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.619931" y="-0.283488" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.017852" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>IDLE</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:13.972621Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....pP.[..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620054" y="-0.283769" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>MOVING</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:14.005816Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....pQ.[..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.619997" y="-0.283732" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.019252" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:14.039055Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....pR.[.WVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620025" y="-0.283657" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.021352" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:14.072275Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....pS.[..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620025" y="-0.283544" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>IDLE</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:14.105649Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$..;..pT.[..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620028" y="-0.283763" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.022702" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>MOVING</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:14.139027Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....pU.\.{Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620019" y="-0.283719" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:14.172234Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$..9..pV.\.3Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:MoveStatus>
+    <tt:PanTilt>IDLE</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:14.205442Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....pW.\..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620050" y="-0.283781" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>MOVING</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:14.238783Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$..x..pX.\%.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:Zoom x="0.030003" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:14.271990Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....pY.\1;Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620015" y="-0.283450" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:14.305212Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$..9..pZ.\<.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620007" y="-0.283265" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.032253" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>IDLE</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:14.338439Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$..;..p[.\H.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620052" y="-0.283578" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.035704" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>MOVING</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:14.371665Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p\.\TKVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620044" y="-0.283642" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:14.404947Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p].\_.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620044" y="-0.283580" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.037954" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:14.438204Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p^.\k.Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620004" y="-0.283457" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>IDLE</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:14.471449Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....p_.\w_Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620028" y="-0.283769" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>MOVING</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:14.504703Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$..9..p`.\..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620035" y="-0.283611" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.050955" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>IDLE</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:14.571069Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....pa.\.bVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620043" y="-0.283767" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>MOVING</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:14.604298Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....pb.\..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620059" y="-0.283747" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.055106" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:14.637508Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....pc.\..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620035" y="-0.283697" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.061106" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:14.670731Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....pd.\.fVp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620035" y="-0.283624" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>IDLE</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:14.703909Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$..W..pe.\..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620043" y="-0.283780" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+    <tt:Zoom x="0.061206" space="http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:MoveStatus>
+    <tt:PanTilt>MOVING</tt:PanTilt>
+    <tt:Zoom>IDLE</tt:Zoom>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:14.737087Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....pf.\..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:Position>
+    <tt:PanTilt x="-0.620043" y="-0.283779" space="http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace" />
+  </tt:Position>
+  <tt:UtcTime>2024-11-21T18:46:14.770305Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$..9..pg.]..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:PTZ>
+<tt:PTZStatus>
+  <tt:MoveStatus>
+    <tt:PanTilt>IDLE</tt:PanTilt>
+  </tt:MoveStatus>
+  <tt:UtcTime>2024-11-21T18:46:14.935955Z</tt:UtcTime>
+</tt:PTZStatus>
+</tt:PTZ>
+</tt:MetadataStream>
+$.....ph._..Vp..<?xml version="1.0" encoding="UTF-8"?>
+<tt:MetadataStream xmlns:tt="http://www.onvif.org/ver10/schema">
+<tt:Event><wsnt:NotificationMessage xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:tnsaxis="http://www.axis.com/2009/event/topics" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa5="http://www.w3.org/2005/08/addressing"><wsnt:Topic Dialect="http://docs.oasis-open.org/wsn/t-1/TopicExpression/Simple">tns1:PTZController/tnsaxis:Move/Channel_1</wsnt:Topic><wsnt:ProducerReference><wsa5:Address>uri://25ec1bd5-605e-45aa-abe9-a800a6080a55/ProducerReference</wsa5:Address></wsnt:ProducerReference><wsnt:Message><tt:Message UtcTime="2024-11-21T18:46:16.350613Z" PropertyOperation="Changed"><tt:Source><tt:SimpleItem Name="PTZConfigurationToken" Value="1"/></tt:Source><tt:Key></tt:Key><tt:Data><tt:SimpleItem Name="is_moving" Value="0"/></tt:Data></tt:Message></wsnt:Message></wsnt:NotificationMessage></tt:Event></tt:MetadataStream>
