@@ -510,6 +510,7 @@ void* __attribute__((__stdcall__)) RtspServer::ProcessRtsp(void* param)
 							{
 								RtspHeader* rtsp = (RtspHeader*)ptr;
 								if (rtsp->magic != 0x24) {
+									sl = 0;
 									printf("%s frame format:%x error\r\n", __FUNCTION__,rtsp->magic);
 									break;
 								}
@@ -536,7 +537,8 @@ void* __attribute__((__stdcall__)) RtspServer::ProcessRtsp(void* param)
 								ptr = ptr + sizeof(RtspHeader) + size;
 								RtspHeader* rtsp2 = (RtspHeader*)ptr;
 								if (rtsp2->magic != 0x24) {
-									printf("%s frame format:%x error\r\n", __FUNCTION__, rtsp->magic);
+									printf("%s frame format:%x error\r\n", __FUNCTION__, rtsp2->magic);
+									sl = 0;
 									break;
 								}
 								
@@ -561,7 +563,7 @@ void* __attribute__((__stdcall__)) RtspServer::ProcessRtsp(void* param)
 								break;
 							}
 							else {
-								break;
+								//break;
 							}
 						}
 					}				
