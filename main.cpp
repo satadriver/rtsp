@@ -16,10 +16,16 @@ int main(int argc, char** argv) {
 
 	int ret = 0;
 
+	time_t t = time(0);
+
 	FWriter(PACKET_CMD_FILENAME, "\r\n", 2, 1);
 
 	if (argc < 2) {
-		printf("example:%s 192.168.1.101 554",argv[0]);
+		printf("example client:%s --client 192.168.1.101 554 10",argv[0]);
+		printf("\r\n");
+		printf("example server:%s --server", argv[0]);
+		printf("\r\n");
+		ret = getchar();
 		return -1;
 	}
 

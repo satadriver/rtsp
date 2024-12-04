@@ -269,7 +269,7 @@ int RtspClient::Client(const char * fn) {
 		else if (seq == 0) {
 			
 			time_t t = time(0) * 1000;
-			sprintf(initUrl, g_strOptionsUrl, m_ip.c_str());
+			sprintf(initUrl, g_strOptionsUrl, m_ip.c_str(),t);
 			sendLen = sprintf(sendBuf, format, initUrl,cseq ++);
 
 		}
@@ -353,7 +353,7 @@ int RtspClient::Client(const char * fn) {
 		//ret = ParseRtpStream(PACKET_RSTP_FILENAME, fn);
 		 
 		char* nextptr = 0;
-		unsigned long long ts = strtoll(m_ts.c_str(), &nextptr,10);
+		unsigned long ts = strtoll(m_ts.c_str(), &nextptr,10);
 
 		ret = LzyFormat(PACKET_RSTP_FILENAME, fn, ts);
 	}

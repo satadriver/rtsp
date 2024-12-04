@@ -11,7 +11,7 @@
 
 #include <iostream>
 
-
+#include "rtsp.h"
 
 
 
@@ -34,6 +34,11 @@ public:
 	static void * __attribute__((__stdcall__)) ProcessRtsp(void* );
 #endif
 
+	int TrimFrame();
+	int FrameTimeStamp();
+	RtspHeader* GetLastFrame();
+	int GetFirstFrame();
+
 	std::string GetTransport(int type,int ,int);
 
 	std::string GetRTPInfo(std::string url);
@@ -55,8 +60,10 @@ public:
 	int m_fs=0;
 	int m_dataSize=0;
 
-	char* m_playOffset = 0;
-	int m_play_tag = 0;
+	unsigned int m_playDelay;
+
+	int m_frameTotal = 0;
+
 };
 
 

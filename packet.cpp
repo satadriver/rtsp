@@ -13,10 +13,10 @@ using namespace std;
 
 #ifdef _WIN32
 const char* g_strOptionsUrl =
-"rtsp://%s/axis-media/media.amp";
+"rtsp://%s/axis-media/media.amp?camera=1&overview=0&resolution=1280x720&videoframeskipmode=empty&videozprofile=classic&fps=30&timestamp=%I64u&Axis-Orig-Sw=true";
 #else
 const char* g_strOptionsUrl =
-"rtsp://%s/axis-media/media.amp";
+"rtsp://%s/axis-media/media.amp?camera=1&overview=0&resolution=1280x720&videoframeskipmode=empty&videozprofile=classic&fps=30&timestamp=%llu&Axis-Orig-Sw=true";
 #endif
 
 
@@ -32,7 +32,7 @@ const char* g_strDescribe =
 const char* g_strSetup = 
 "SETUP %s RTSP/1.0\r\n"	///stream=0
 "CSeq: %u\r\n"
-//"Blocksize: 64000\r\n"
+"Blocksize: 64000\r\n"
 "%s\r\n"
 "Transport: RTP/AVP/TCP;unicast;interleaved=0-1\r\n\r\n";
 
@@ -47,7 +47,7 @@ const char* g_strTeardown =
 "TEARDOWN %s RTSP/1.0\r\n"
 "CSeq: %u\r\n"
 "%s\r\n"
-//"Range: npt=0.000-\r\n";
+"Range: npt=0.000-\r\n"
 "Session: %s\r\n\r\n";
 
 
@@ -61,7 +61,7 @@ const char* g_strSetupAuth =
 "%s %s RTSP/1.0\r\n"	///stream=0
 "CSeq: %u\r\n"
 "Authorization: Digest username=\"%s\",realm=\"%s\",nonce=\"%s\",uri=\"%s\",response=\"%s\"\r\n"
-//"Blocksize: 64000\r\n"
+"Blocksize: 64000\r\n"
 "Transport: RTP/AVP/TCP;unicast;interleaved=0-1\r\n\r\n";
 
 const char* g_strPlayAuth =
@@ -76,7 +76,7 @@ const char* g_strTeardownAuth =
 "%s %s RTSP/1.0\r\n"
 "CSeq: %u\r\n"
 "%s\r\n"
-//"Range: npt=0.000-\r\n"
+"Range: npt=0.000-\r\n"
 "Session: %s\r\n\r\n";
 
 
@@ -130,7 +130,7 @@ const char* g_strDescribeDataF =
 "c=IN IP4 0.0.0.0\r\n"
 "b=AS:51200\r\n"
 "a=rtpmap:96 H264/90000\r\n"
-"a=fmtp:96 packetization-mode=1;profile-level-id=640029;sprop-parameter-sets=Z2QAKa0AxSAeAIn5ZuAgIDSgAQesADN/mAHiRFQ=,aO48sA==\r\n"
+"a=fmtp:96 packetization-mode=1;profile-level-id=640029;sprop-parameter-sets=Z2QAKa0AxSAUAW6bgICA0oAEHrAAzf5gB4kRUA==,aO48sA==\r\n"
 "a=ts-refclk:local\r\n"
 "a=mediaclk:sender\r\n"
 "a=x-onvif-track:VIDEO000\r\n"

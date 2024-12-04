@@ -128,7 +128,7 @@ string GetUri(string url) {
 	int start = GetUrlCmd(url.c_str());
 	if (start <= 0)
 	{
-		return url;
+		start = 0;
 	}
 
 	int pos = url.find("?");

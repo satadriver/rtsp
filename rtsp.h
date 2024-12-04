@@ -97,4 +97,4 @@ int ParseRtpStream(const char* sfn, const char* dfn);
 
 int SendRtpStream(const char* sfn, int sock);
 
-int LzyFormat(const char* sfn, const char* dfn,unsigned long long ts);
+int LzyFormat(const char* sfn, const char* dfn,unsigned long ts);

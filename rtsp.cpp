@@ -118,7 +118,7 @@ int SendRtpStream(const char* sfn, int sock) {
 
 
 
-int LzyFormat(const char* sfn, const char* dfn,unsigned long long ts) {
+int LzyFormat(const char* sfn, const char* dfn,unsigned long ts) {
 
 	FWriter(dfn, "", 0, 1);
 
