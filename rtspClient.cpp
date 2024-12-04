@@ -100,23 +100,28 @@ int RtspClient::GetReplyInfo(const char* recvBuf, int size,int seq) {
 }
 
 
+string GetMethod(const char * sendBuf) {
+	int methodLen = GetUrlCmd(sendBuf);
+	string method = string(sendBuf, methodLen - 1);
+	return method;
+}
+
 
 int RtspClient::Authority(char* sendBuf, int sendLen, char* recvBuf, int recvLimit,int seq) {
 
-	char* http = 0;
-	string hdr = GetHttpHeader(recvBuf, recvLimit, &http);
+	string user = "";
+
+	char* recvData = 0;
+	string recvHdr = GetHttpHeader(recvBuf, recvLimit, &recvData);
 
 	string auth = GetHeaderValue(recvBuf, "WWW-Authenticate");
-
 	string realm = GetStringValue(auth, "realm");
-	string user = "";
 	string nonce = GetStringValue(auth, "nonce");
 	string uri = GetStringValue(auth, "uri");
 
 	string cseq = GetHeaderValue(sendBuf, "CSeq");
 
-	int methodLen = GetUrlCmd(sendBuf);
-	string method = string(sendBuf, methodLen - 1);
+	string method = GetMethod(sendBuf);
 
 	const char* pass = OBJECT_PASSWORD;
 	const char* username = OBJECT_USERNAME;
@@ -142,17 +147,16 @@ int RtspClient::Authority(char* sendBuf, int sendLen, char* recvBuf, int recvLim
 	char codeMd5[64];
 	GetMD5((unsigned char*)code, codelen, (unsigned char*)codeMd5, 1);
 
+	if (m_auth == "") {
+		const char* g_authForamt =
+			"Authorization: Digest username=\"%s\",realm=\"%s\",nonce=\"%s\",uri=\"%s\",response=\"%s\"";
+		char strMyAuth[0x1000];
+		sprintf(strMyAuth, g_authForamt, user.c_str(), realm.c_str(), nonce.c_str(), uri.c_str(), codeMd5);
+		m_auth = strMyAuth;
+	}
+
 	char strAuth[0x1000];
-	//time_t t = m_time;
-
 	int authLen = 0;
-
-	const char* g_authForamt =
-		"Authorization: Digest username=\"%s\",realm=\"%s\",nonce=\"%s\",uri=\"%s\",response=\"%s\"";
-	char strMyAuth[0x1000];
-	sprintf(strMyAuth, g_authForamt, user.c_str(), realm.c_str(), nonce.c_str(), uri.c_str(), codeMd5);
-	m_auth = strMyAuth;
-
 	if (seq == 1) {
 		authLen = sprintf(strAuth, g_strDescribeAuth, method.c_str(), uri.c_str(), atoi(cseq.c_str()),
 			user.c_str(), realm.c_str(), nonce.c_str(), uri.c_str(), codeMd5);
@@ -171,7 +175,7 @@ int RtspClient::Authority(char* sendBuf, int sendLen, char* recvBuf, int recvLim
 
 	int sendAuthLen = send(m_sock, strAuth, authLen, 0);
 	if (sendAuthLen <= 0) {
-		printf("%s send length:%d error\r\n", __FUNCTION__, sendAuthLen);
+		printf("%s send method:%s length:%d error\r\n", __FUNCTION__, method.c_str(),sendAuthLen);
 		return 0;
 	}
 	FWriter(PACKET_CMD_FILENAME, strAuth, authLen, 0);
@@ -182,7 +186,7 @@ int RtspClient::Authority(char* sendBuf, int sendLen, char* recvBuf, int recvLim
 		recvBuf[recvLen] = 0;
 		const char* successResponse = "RTSP/1.0 200 OK\r\n";
 		if ( memcmp(recvBuf, successResponse, strlen(successResponse))!= 0 ) {
-			printf("%s recv illegle rtsp:%s\r\n",__FUNCTION__,recvBuf);
+			printf("%s recv method:%s error\r\n",__FUNCTION__, method.c_str());
 			return 0;
 		}
 		GetReplyInfo(recvBuf, recvLen, seq);
@@ -190,7 +194,7 @@ int RtspClient::Authority(char* sendBuf, int sendLen, char* recvBuf, int recvLim
 		return recvLen;
 	}
 	else {
-		printf("%s recv length:%d error\r\n", __FUNCTION__, recvLen);
+		printf("%s recv method:%s length:%d error\r\n", __FUNCTION__,method.c_str(), recvLen);
 	}
 
 	return 0;	
@@ -234,9 +238,6 @@ int RtspClient::Client(const char * fn) {
 		return -1;
 	}
 
-	int seq = 0;
-
-	int n = sizeof(g_rtspReq) / sizeof(char*);
 	char sendBuf[0x1000];
 	char recvBuf[0x1000];
 
@@ -246,12 +247,15 @@ int RtspClient::Client(const char * fn) {
 
 	//SYSTEMTIME systime;
 	//GetLocalTime(&systime);
-	//__int64 t = time(0) * 1000 + systime.wMilliseconds;
-	//m_time = t;
+	//time_t t = time(0) * 1000 + systime.wMilliseconds;
+	time_t t = time(0) * 1000;
 
 	char initUrl[0x1000];
 
 	int cseq = rand();
+
+	int seq = 0;
+	int n = sizeof(g_rtspReq) / sizeof(char*);
 	for (seq = 0; seq < n; seq++) {
 
 		const char* format = g_rtspReq[seq]; 
@@ -266,19 +270,18 @@ int RtspClient::Client(const char * fn) {
 		else if (seq == 1) {
 			sendLen = sprintf(sendBuf, format, initUrl, cseq++);
 		}
-		else if (seq == 0) {
-			
-			time_t t = time(0) * 1000;
+		else if (seq == 0) {		
 			sprintf(initUrl, g_strOptionsUrl, m_ip.c_str(),t);
 			sendLen = sprintf(sendBuf, format, initUrl,cseq ++);
-
 		}
 		else {
+			perror("error sequence number!\r\n");
 			break;
 		}
 
 		int sendlen = send(s,sendBuf, sendLen, 0);
 		if (sendLen <= 0) {
+			perror("send\r\n");
 			break;
 		}
 		FWriter(PACKET_CMD_FILENAME, sendBuf, sendLen, 0);
@@ -308,26 +311,26 @@ int RtspClient::Client(const char * fn) {
 			}
 		}
 		else if (memcmp(recvBuf, badRequest, strlen(badRequest)) == 0) {
+			printf("%s Authority error:%s\r\n", __FUNCTION__, badRequest);
 			break;
 		}
 		else if (memcmp(recvBuf, successResponse, strlen(successResponse))==0) {
 			GetReplyInfo(recvBuf, recvLen, seq);
 		}
-		else if (memcmp(recvBuf, successResponse, strlen(successResponse)) ) {
+		else if (memcmp(recvBuf, successResponse, strlen(successResponse)) != 0) {
+			printf("%s Authority not success\r\n", __FUNCTION__);
 			break;
 		}
 	}
-#define H264_FRAME_LIMIT 0x400
 
 	time_t timeNow = time(0);
-	
 	if (seq == 4) {
 
 		FWriter(PACKET_RSTP_FILENAME, "", 0, 1);
 
 		FWriter(PACKET_RSTP_FILENAME, recvBuf, recvLen, 0);
 		int videoLimit = 0x100000;
-		char* videoBuf = new char[0x100000];
+		char* videoBuf = new char[videoLimit];
 		int cnt = 0;
 		while (time(0) - timeNow <= m_seconds) 
 		{
@@ -353,7 +356,7 @@ int RtspClient::Client(const char * fn) {
 		//ret = ParseRtpStream(PACKET_RSTP_FILENAME, fn);
 		 
 		char* nextptr = 0;
-		unsigned long ts = strtoll(m_ts.c_str(), &nextptr,10);
+		unsigned int ts =(unsigned int) strtoll(m_ts.c_str(), &nextptr,10);
 
 		ret = LzyFormat(PACKET_RSTP_FILENAME, fn, ts);
 	}
@@ -371,7 +374,6 @@ int __stdcall RtspClient::TcpClient(char * sendBuf,int sendLen,char * recvBuf,in
 int __attribute__((__stdcall__)) RtspClient::TcpClient(char * sendBuf,int sendLen,char * recvBuf,int recvLen)
 #endif
 {
-
 	int ret = 0;
 
 	int s = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -425,7 +427,6 @@ int __stdcall RtspClient::UdpClient(char* sendBuf, int sendLen, char* recvBuf, i
 int __attribute__((__stdcall__)) RtspClient::UdpClient(char* sendBuf, int sendLen, char* recvBuf, int recvLen)
 #endif
 {
-
 	int ret = 0;
 
 	int s = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);

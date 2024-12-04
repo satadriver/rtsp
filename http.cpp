@@ -30,8 +30,6 @@ vector<string> GetUrlParams(string url) {
 	{
 		string substr = url.substr(pos + 1);
 
-		int size = 0;
-
 		while (TRUE)
 		{
 			pos = substr.find("&");

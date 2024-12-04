@@ -45,7 +45,7 @@ public:
 
 	int Server(const char* fn);
 
-	std::string m_fn;
+	std::string m_fn="";
 	int m_port=0;
 	int m_type=0;
 
@@ -60,7 +60,7 @@ public:
 	int m_fs=0;
 	int m_dataSize=0;
 
-	unsigned int m_playDelay;
+	unsigned int m_playDelay = 0;
 
 	int m_frameTotal = 0;
 

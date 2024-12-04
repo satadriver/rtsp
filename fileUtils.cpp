@@ -82,6 +82,10 @@ int FWriter(string filename, const char* lpdate, int datesize, int cover) {
 
 
 int FReader(string filename, char** lpbuf, int* bufsize) {
+	if (lpbuf == 0 ) {
+		return 0;
+	}
+
 	int ret = 0;
 
 	FILE* fp = fopen(filename.c_str(), "rb");
@@ -94,14 +98,17 @@ int FReader(string filename, char** lpbuf, int* bufsize) {
 	ret = fseek(fp, 0, SEEK_END);
 
 	int filesize = ftell(fp);
+	if (filesize > 0) {
+		ret = fseek(fp, 0, SEEK_SET);
 
-	ret = fseek(fp, 0, SEEK_SET);
+		*bufsize = filesize;
+		if (*lpbuf == 0) {
+			*lpbuf = new char[filesize + 16];
+		}
+		
+		ret = fread(*lpbuf, 1, filesize, fp);
+	}
 
-	*bufsize = filesize;
-
-	*lpbuf = new char[filesize + 16];
-
-	ret = fread(*lpbuf, 1, filesize, fp);
 	fclose(fp);
 	if (ret == FALSE)
 	{
