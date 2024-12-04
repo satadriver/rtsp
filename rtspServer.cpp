@@ -541,12 +541,6 @@ void* __attribute__((__stdcall__)) RtspServer::ProcessRtsp(void* param)
 									sdelay = 0;
 									printf("frame:%d delay:%u\r\n", cnt, sdelay);
 								}
-								if (sdelay > 20) {
-									//sdelay -= 20;
-								}
-
-								//sdelay = 0;
-
 #ifdef _WIN32
 								Sleep(sdelay);
 #else
