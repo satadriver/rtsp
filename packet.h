@@ -51,3 +51,6 @@ extern const char* g_strPlayResponse;
 extern const char* g_strTeardownResponse;
 
 extern const char* g_strDescPtzResponse;
+
+
+extern const unsigned char g_opzResponseData[1698];

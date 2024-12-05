@@ -481,13 +481,17 @@ void* __attribute__((__stdcall__)) RtspServer::ProcessRtsp(void* param)
 
 				int type = Contain(recvBuf, "ptz=all");
 				if (type) {
+					
+					sl = send(sc, (char*)g_opzResponseData, sizeof(g_opzResponseData), 0);
+
+					/*
 					char* playResp = 0;
 					int playRespSize = 0;
 					ret = FReader("playResponse.dat", &playResp, &playRespSize);
 					if (ret) {
 						sl = send(sc, playResp, playRespSize, 0);
 						delete []playResp;
-					}
+					}*/
 				}
 				else
 				{
@@ -508,16 +512,16 @@ void* __attribute__((__stdcall__)) RtspServer::ProcessRtsp(void* param)
 
 							while (ptr - server->m_data < server->m_dataSize)
 							{
-								RtspHeader* rtsp = (RtspHeader*)ptr;
-								if (rtsp->magic != 0x24) {
+								RtspHeader* rtsp1 = (RtspHeader*)ptr;
+								if (rtsp1->magic != 0x24) {
 									sl = 0;
-									printf("%s frame format:%x error\r\n", __FUNCTION__,rtsp->magic);
+									printf("%s frame:%d format:%x error\r\n", __FUNCTION__, cnt, rtsp1->magic);
 									break;
 								}
 
-								int size = ntohs(rtsp->length);
+								int size = ntohs(rtsp1->length);
 
-								RtpHeader* rtp1 = (RtpHeader*)((char*)rtsp + sizeof(RtspHeader));
+								RtpHeader* rtp1 = (RtpHeader*)((char*)rtsp1 + sizeof(RtspHeader));
 
 								prevTs = rtp1->ts;
 								unsigned int ts = ntohl(rtp1->ts);
@@ -527,17 +531,22 @@ void* __attribute__((__stdcall__)) RtspServer::ProcessRtsp(void* param)
 								//char* rtpdata = (char*)rtp + sizeof(RtpHeader);
 								//int rtpds = size - sizeof(RtpHeader);
 
-								sl = send(sc, (char*)rtsp, sizeof(RtspHeader) + size, 0);
+								sl = send(sc, (char*)rtsp1, sizeof(RtspHeader) + size, 0);
 								if (sl <= 0) {
 									perror("send\r\n");
 									break;
 								}
 
 								cnt++;
+								if (cnt >= server->m_frameTotal) {
+									printf("Send rtsp steam frame total:%d ok\r\n", server->m_frameTotal);
+									sl = 0;
+									break;
+								}
 								ptr = ptr + sizeof(RtspHeader) + size;
 								RtspHeader* rtsp2 = (RtspHeader*)ptr;
 								if (rtsp2->magic != 0x24) {
-									printf("%s frame format:%x error\r\n", __FUNCTION__, rtsp2->magic);
+									printf("%s frame:%d format:%x error\r\n", __FUNCTION__,cnt, rtsp2->magic);
 									sl = 0;
 									break;
 								}
@@ -613,7 +622,7 @@ void* __attribute__((__stdcall__)) RtspServer::ProcessRtsp(void* param)
 	closesocket(sc);
 	delete param;
 
-	printf("Send rtsp steam ok\r\n");
+	//printf("Send rtsp steam ok\r\n");
 
 	return 0;
 }
