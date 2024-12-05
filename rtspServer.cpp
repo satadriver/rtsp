@@ -11,6 +11,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <sys/socket.h>
+#include <signal.h>
 #define closesocket close
 #endif
 
@@ -40,13 +41,13 @@ unsigned int g_servUdpPort2 = 50001;
 
 
 int RtspServer::TrimFrame() {
-	char* nextptr = 0;
-	unsigned int startTs = strtoll(m_rtpTime.c_str(), &nextptr, 10);
 
 	char* buffer = new char[m_dataSize];
 	char* buf = buffer;
 	int bufsize = 0;
 	int cnt = 0;
+
+	RtpHeader* rtp = 0;
 
 	char* ptr = m_data;
 	while (ptr - m_data < m_dataSize)
@@ -54,19 +55,32 @@ int RtspServer::TrimFrame() {
 		RtspHeader* rtsp = (RtspHeader*)ptr;
 		if (rtsp->magic == 0x24) {
 
-			int size = ntohs(rtsp->length);
 			if (rtsp->channel == 0) {
-				RtpHeader* rtp = (RtpHeader*)((char*)rtsp + sizeof(RtspHeader));
-				unsigned int ts = ntohl(rtp->ts) - startTs;
-				rtp->ts = ntohl(ts);
+				int size = ntohs(rtsp->length);
+
+				rtp = (RtpHeader*)((char*)rtsp + sizeof(RtspHeader));
+
+				unsigned int ts = ntohl(rtp->ts);
+				unsigned int newTs = ts - m_rtpTm;
+				rtp->ts = ntohl(newTs);
 				int packsize = sizeof(RtspHeader) + size;
 				memcpy(buf, (char*)rtsp, packsize);
+
+				if (m_firstRtp == 0&&m_lastRtp == 0) {
+					m_firstRtp = rtp;
+					if (m_rtpTm != ts) {
+						printf("%s rtptime in http header:%u, but in first rtp packet:%u\r\n",
+							m_fn.c_str(), m_rtpTm, ts);
+						exit(0);
+					}
+				}
+
 				buf += packsize;
 				bufsize += packsize;
 				cnt++;
 			}
 
-			ptr = ptr + sizeof(RtspHeader) + size;
+			ptr = ptr + sizeof(RtspHeader) + ntohs(rtsp->length);
 		}
 		else {
 			printf("%s format error\r\n", m_fn.c_str());
@@ -79,40 +93,53 @@ int RtspServer::TrimFrame() {
 	
 	delete [] buffer;
 
+	if (m_lastRtp == 0) {
+		m_lastRtp = rtp;
+	}
+
+	m_playDelay = ntohl(m_lastRtp->ts) - ntohl(m_firstRtp->ts);
+	
+	m_frameTotal = cnt;
+
 	return cnt;
 }
 
-RtspHeader* RtspServer::GetLastFrame() {
-	int cnt = 0;
-	char* nextptr = 0;
-	unsigned int startTs = strtoll(m_rtpTime.c_str(), &nextptr, 10);
 
-	RtspHeader* rtsp = 0;
+
+int RtspServer::GetFrameBorder() {
+	int cnt = 0;
+
+	RtpHeader* rtp = 0;
 	char* ptr = m_data;
 	while (ptr - m_data < m_dataSize)
 	{
 		RtspHeader*  rtsp1 = (RtspHeader*)ptr;
 		if (rtsp1->magic == 0x24 && rtsp1->channel == 0) {
 			if (rtsp1->channel == 0) {
-				rtsp = rtsp1;
-
+				
 				cnt++;
 
 				int size = ntohs(rtsp1->length);
 
 				RtpHeader* rtp1 = (RtpHeader*)((char*)rtsp1 + sizeof(RtspHeader));
+				if (m_firstRtp == 0) {
+					m_firstRtp = rtp1;
+				}
+				rtp = rtp1;
 				
 				ptr = ptr + sizeof(RtspHeader) + size;
+
+				if (ptr >= m_data + m_dataSize) {
+					break;
+				}
 
 				RtspHeader* rtsp2 = (RtspHeader*)ptr;
 				if (rtsp2->magic == 0x24 && rtsp2->channel == 0) {
 
-					rtsp = rtsp2;
-
 					cnt++;
 
 					RtpHeader* rtp2 = (RtpHeader*)((char*)rtsp2 + sizeof(RtspHeader));
-
+					rtp = rtp2;
 					unsigned int offset = ntohl(rtp2->ts) - ntohl(rtp1->ts);
 					
 					if (offset && (offset > 3600 || offset < 1800)) {
@@ -123,43 +150,15 @@ RtspHeader* RtspServer::GetLastFrame() {
 		}
 	}
 
-	return rtsp;
-}
-
-
-int RtspServer::GetFirstFrame() {
-	return 0;
-}
-
-int RtspServer::FrameTimeStamp() {
+	if (m_lastRtp == 0) {
+		m_lastRtp = rtp;
+	}
 	
-	int cnt = 0;
-
-	char* nextptr = 0;
-	unsigned long startTs = strtoll(m_rtpTime.c_str(), &nextptr, 10);
-
-	char* ptr = m_data;
-	RtspHeader* rtsp = (RtspHeader*)ptr;
-
-	RtpHeader* rtp = (RtpHeader*)(ptr + sizeof(RtspHeader));
-
-	unsigned int firstTs = ntohl(rtp->ts);
-
-	int size = ntohs(rtsp->length);
-
-	ptr = ptr + sizeof(RtspHeader) + size;
-
-	RtspHeader* lastRtsp = GetLastFrame();
-
-	RtpHeader* lastRtp =(RtpHeader * )( (char*)lastRtsp + sizeof(RtspHeader));
-
-	unsigned int lastTs = ntohl(lastRtp->ts);
-
-	unsigned int tsOffset = lastTs - firstTs;
-	m_playDelay = tsOffset;
-
-	return 0;
+	return cnt;
 }
+
+
+
 
 
 
@@ -212,7 +211,9 @@ RtspServer::RtspServer(const char* port,const char * fn ) {
 	if (rtptime == "") {
 		rtptime = getstring((char*)"rtptime=", (char*)"", (char*)rtpInfo.c_str());
 	}
-	m_rtpTime = rtptime;
+
+	char* nextptr = 0;
+	m_rtpTm = strtoll(rtptime.c_str(), &nextptr, 10);
 	m_seq = seq;
 
 	m_data = data;
@@ -230,7 +231,7 @@ RtspServer::RtspServer(const char* port,const char * fn ) {
 
 	m_frameTotal = TrimFrame();
 
-	ret = FrameTimeStamp();
+	int cnt = GetFrameBorder();
 
 	printf("%s file:%s ,size:%u,frame:%u, ssrc:%s, seq:%s, rtptime:%s\r\n",
 		__FUNCTION__, m_fn.c_str(),m_dataSize, m_frameTotal,m_ssrc.c_str(), seq.c_str(), rtptime.c_str());
@@ -383,9 +384,9 @@ string RtspServer::GetTransport(int type,int udpPort1,int udpPort2) {
 
 
 string RtspServer::GetRTPInfo(string url) {
-	const char* format = "url=%s;seq=%s;rtptime=%s";
+	const char* format = "url=%s;seq=%s;rtptime=%u";
 	char str[0x1000] = { 0 };
-	sprintf(str, format, url.c_str(), m_seq.c_str(), m_rtpTime.c_str());
+	sprintf(str, format, url.c_str(), m_seq.c_str(), m_rtpTm);
 	return str;
 }
 
@@ -394,6 +395,146 @@ string GetCSeq(char* recvBuf, int recvLen) {
 	string cseq = GetHeaderValue(recvBuf, "CSeq");
 	return cseq;
 }
+
+
+
+
+int RtspServer::PlayFrame(int sc,char * recvBuf,int recvLen,char * sendBuf,int sendLimit) {
+
+	string cseq = GetCSeq(recvBuf, recvLen);
+
+	string url = GetUrl(recvBuf);
+	string info = GetRTPInfo(url);
+	int sendLen = sprintf(sendBuf, g_strPlayResponse, cseq.c_str(), info.c_str(), g_strSession);
+	int sl = send(sc, (char*)sendBuf, sendLen, 0);
+	if (sl <= 0) {
+		printf("%s send play:%s ERROR!\r\n", __FUNCTION__, sendBuf);
+	}
+	else {
+		printf("send PLAY response:%s OK!\r\n", sendBuf);
+
+		int type = Contain(recvBuf, "ptz=all");
+		if (type) {
+#ifdef _WIN32
+			//Sleep(-1);
+#else
+			//usleep(-1);
+#endif
+			sl = send(sc, (char*)g_opzResponseData, sizeof(g_opzResponseData), 0);
+			//sl = send(sc, (char*)"\r\n\r\n", 4, 0);
+
+			/*
+			char* playResp = 0;
+			int playRespSize = 0;
+			ret = FReader("playResponse.dat", &playResp, &playRespSize);
+			if (ret) {
+				sl = send(sc, playResp, playRespSize, 0);
+				delete []playResp;
+			}*/
+		}
+		else
+		{
+			char* data = new char[0x10000];
+			while (1)
+			{
+				if (0) {
+					sl = send(sc, m_data, m_dataSize, 0);
+					if (sl <= 0) {
+						perror("send\r\n");
+						break;
+					}
+				}
+				else {
+					int cnt = 0;
+					char* ptr = m_data;
+
+					while (ptr < m_data + m_dataSize)
+					{
+						RtspHeader* rtsp1 = (RtspHeader*)ptr;
+						if (rtsp1->magic != 0x24) {
+							sl = 0;
+							printf("%s frame:%d format:%x error\r\n", __FUNCTION__, cnt, rtsp1->magic);
+							break;
+						}
+
+						int size = ntohs(rtsp1->length);
+
+						memcpy(data, rtsp1, sizeof(RtspHeader) + size);
+						RtpHeader* rtp1 = (RtpHeader*)((char*)data + sizeof(RtspHeader));
+						unsigned int ts1 = ntohl(rtp1->ts);
+						unsigned int newTs = m_rtpTm + ts1;
+						rtp1->ts = ntohl(newTs);
+						try {
+
+							sl = send(sc, (char*)data, sizeof(RtspHeader) + size, 0);
+						}
+						catch (...) {
+							sl = 0;
+							printf("send exception %d\r\n",errno);
+							break;
+						}
+						if (sl <= 0) {
+							perror("send\r\n");
+							break;
+						}
+
+						//char* rtpdata = (char*)rtp + sizeof(RtpHeader);
+						//int rtpds = size - sizeof(RtpHeader);
+
+						cnt++;
+						if (cnt >= m_frameTotal) {
+							printf("Send rtsp steam frame total:%d ok\r\n", m_frameTotal);
+							sl = 1;
+							break;
+						}
+
+						ptr = ptr + sizeof(RtspHeader) + size;
+						if (ptr >= m_data + m_dataSize) {
+							printf("Send rtsp steam frame total:%d ok\r\n", m_frameTotal);
+							sl = 0;
+							break;
+						}
+						RtspHeader* rtsp2 = (RtspHeader*)ptr;
+						if (rtsp2->magic != 0x24) {
+							printf("%s frame:%d format:%x error\r\n", __FUNCTION__, cnt, rtsp2->magic);
+							sl = 0;
+							break;
+						}
+
+						RtpHeader* rtp2 = (RtpHeader*)((char*)rtsp2 + sizeof(RtspHeader));
+
+						unsigned int ts2 = ntohl(rtp2->ts);
+
+						unsigned int sdelay = ((ts2 - ts1) * 1000) / 90000;
+						if (sdelay && (sdelay > 40 || sdelay < 20)) {
+							printf("frame:%d delay:%u error\r\n", cnt, sdelay);
+							sdelay = 0;
+						}
+#ifdef _WIN32
+						Sleep(sdelay);
+#else
+						usleep(1000 * sdelay);
+#endif
+					}
+
+					if (sl <= 0) {
+						printf("%s send error\r\n", __FUNCTION__);
+						break;
+					}
+					else {
+						m_rtpTm += m_playDelay;
+						//break;
+					}
+				}
+			}
+
+			delete [] data;
+		}
+	}
+	return sl;
+}
+
+
 
 #ifdef _WIN32
 void* __stdcall RtspServer::ProcessRtsp(void* param)
@@ -417,15 +558,23 @@ void* __attribute__((__stdcall__)) RtspServer::ProcessRtsp(void* param)
 	int udpPort1 = 0;
 	int udpPort2 = 0;
 
-	while (1) {
-		int recvLimit = sizeof(recvBuf);
+	int recvLimit = sizeof(recvBuf);
+	int sendLimit = sizeof(sendBuf);
 
-		int recvLen = recv(sc, recvBuf, recvLimit - 1, 0);
+	while (1) {
+		int recvLen = 0;	
+		try {
+			recvLen = recv(sc, recvBuf, recvLimit - 1, 0);
+		}
+		catch (...) {
+			printf("%s exception\r\n", __FUNCTION__);
+			break;
+		}
+
 		if (recvLen > 0 && recvLen < recvLimit) {
 			recvBuf[recvLen] = 0;
 
-			int sendLen = 0;
-			string cseq = GetCSeq(recvBuf, recvLimit);
+			string cseq = GetCSeq(recvBuf, recvLen);
 
 			if (memcmp(recvBuf, "OPTIONS ", 8) == 0) {
 				sendLen = sprintf(sendBuf, g_strOptionsResponse, cseq.c_str());
@@ -471,112 +620,7 @@ void* __attribute__((__stdcall__)) RtspServer::ProcessRtsp(void* param)
 				sl = send(sc, sendBuf, sendLen, 0);
 			}
 			else if (memcmp(recvBuf, "PLAY ", 5) == 0) {
-
-				string url = GetUrl(recvBuf);
-				string info = server->GetRTPInfo(url);
-				sendLen = sprintf(sendBuf, g_strPlayResponse, cseq.c_str(), info.c_str(), g_strSession);
-				sl = send(sc, (char*)sendBuf, sendLen, 0);
-
-				printf("send PLAY response:%s\r\n", sendBuf);
-
-				int type = Contain(recvBuf, "ptz=all");
-				if (type) {
-					
-					sl = send(sc, (char*)g_opzResponseData, sizeof(g_opzResponseData), 0);
-
-					/*
-					char* playResp = 0;
-					int playRespSize = 0;
-					ret = FReader("playResponse.dat", &playResp, &playRespSize);
-					if (ret) {
-						sl = send(sc, playResp, playRespSize, 0);
-						delete []playResp;
-					}*/
-				}
-				else
-				{
-					unsigned int prevTs = 0;
-					unsigned int sdelay = 0;
-					while (1) 
-					{
-						if (0) {
-							sl = send(sc, server->m_data, server->m_dataSize, 0);
-							if (sl <= 0) {
-								perror("send\r\n");
-								break;
-							}
-						}
-						else {
-							int cnt = 0;
-							char* ptr = server->m_data;
-
-							while (ptr - server->m_data < server->m_dataSize)
-							{
-								RtspHeader* rtsp1 = (RtspHeader*)ptr;
-								if (rtsp1->magic != 0x24) {
-									sl = 0;
-									printf("%s frame:%d format:%x error\r\n", __FUNCTION__, cnt, rtsp1->magic);
-									break;
-								}
-
-								int size = ntohs(rtsp1->length);
-
-								RtpHeader* rtp1 = (RtpHeader*)((char*)rtsp1 + sizeof(RtspHeader));
-
-								prevTs = rtp1->ts;
-								unsigned int ts = ntohl(rtp1->ts);
-								unsigned int newTs = server->m_playDelay + ts;
-								rtp1->ts = ntohl(newTs);
-
-								//char* rtpdata = (char*)rtp + sizeof(RtpHeader);
-								//int rtpds = size - sizeof(RtpHeader);
-
-								sl = send(sc, (char*)rtsp1, sizeof(RtspHeader) + size, 0);
-								if (sl <= 0) {
-									perror("send\r\n");
-									break;
-								}
-
-								cnt++;
-								if (cnt >= server->m_frameTotal) {
-									printf("Send rtsp steam frame total:%d ok\r\n", server->m_frameTotal);
-									sl = 0;
-									break;
-								}
-								ptr = ptr + sizeof(RtspHeader) + size;
-								RtspHeader* rtsp2 = (RtspHeader*)ptr;
-								if (rtsp2->magic != 0x24) {
-									printf("%s frame:%d format:%x error\r\n", __FUNCTION__,cnt, rtsp2->magic);
-									sl = 0;
-									break;
-								}
-								
-								RtpHeader* rtp2 = (RtpHeader*)((char*)rtsp2 + sizeof(RtspHeader));
-
-								unsigned int ts1 = ntohl(prevTs);
-								unsigned int ts2 = ntohl(rtp2->ts);
-								sdelay = (( ts2 - ts1)*1000)/90000 ;
-								if (sdelay && (sdelay > 40 || sdelay < 20)) {
-									sdelay = 0;
-									printf("frame:%d delay:%u\r\n", cnt, sdelay);
-								}
-#ifdef _WIN32
-								Sleep(sdelay);
-#else
-								usleep(1000* sdelay);
-#endif
-							}
-
-							if (sl <= 0) {
-								printf("%s send error\r\n", __FUNCTION__);
-								break;
-							}
-							else {
-								//break;
-							}
-						}
-					}				
-				}
+				sl = server->PlayFrame(sc, recvBuf, recvLen, sendBuf, sendLimit);
 			}
 			else if (memcmp(recvBuf, "DESCRIBE ", 9) == 0) {
 				char data[0x1000];
@@ -627,7 +671,10 @@ void* __attribute__((__stdcall__)) RtspServer::ProcessRtsp(void* param)
 	return 0;
 }
 
-
+// ÷’÷π–≈∫≈¥¶¿Ì
+void signalHandler(int signum) {
+	std::cout << "\nReceived signal " << signum << std::endl;
+}
 
 int RtspServer::Server(const char* fn) {
 
@@ -645,11 +692,14 @@ int RtspServer::Server(const char* fn) {
 
 	sockaddr_in sa = { 0 };
 	sa.sin_family = AF_INET;
-	#ifdef _WIN32
+#ifdef _WIN32
 	sa.sin_addr.S_un.S_addr = INADDR_ANY;
-	#else
+#else
 	sa.sin_addr.s_addr = INADDR_ANY;
-	#endif
+
+	signal(SIGPIPE, signalHandler);
+
+#endif
 	sa.sin_port = ntohs(m_port);
 
 	do{
@@ -694,8 +744,8 @@ int RtspServer::Server(const char* fn) {
 					CloseHandle(ht);
 				}
 #else
-				pthread_t pid = 0;
-				pthread_create(&pid, 0, ProcessRtsp, param);
+				pthread_create((pthread_t *)&param->pid, 0, ProcessRtsp, param);
+				pthread_detach(param->pid);
 #endif
 			}
 			else {

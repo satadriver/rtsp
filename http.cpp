@@ -15,7 +15,7 @@ int Contain(string hdr,string v) {
 	string url = GetUrl(hdr);
 	vector <string> vs = GetUrlParams(url);
 	for (unsigned int i = 0; i < vs.size(); i++) {
-		if (vs[i].find(v) != -1) {
+		if (vs[i].find(v) != string::npos) {
 			return TRUE;
 		}
 	}

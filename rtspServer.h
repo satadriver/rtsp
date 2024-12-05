@@ -35,9 +35,10 @@ public:
 #endif
 
 	int TrimFrame();
-	int FrameTimeStamp();
-	RtspHeader* GetLastFrame();
-	int GetFirstFrame();
+
+	int GetFrameBorder();
+
+	int PlayFrame(int sc,char* recvBuf, int recvLen, char* sendBuf, int sendLen);
 
 	std::string GetTransport(int type,int ,int);
 
@@ -52,7 +53,7 @@ public:
 	int m_sock=0;
 
 	std::string m_seq="";
-	std::string m_rtpTime="";
+	//std::string m_rtpTime="";
 	std::string m_ssrc="";
 
 	char* m_file=0;
@@ -60,10 +61,14 @@ public:
 	int m_fs=0;
 	int m_dataSize=0;
 
-	unsigned int m_playDelay = 0;
+	unsigned int m_rtpTm = 0;
 
 	int m_frameTotal = 0;
 
+	unsigned int m_playDelay = 0;
+
+	RtpHeader* m_firstRtp = 0;
+	RtpHeader* m_lastRtp = 0;
 };
 
 
@@ -73,6 +78,7 @@ public:
 typedef struct {
 	int sc;
 	RtspServer* ptr;
+	unsigned long pid;
 }RtspThreadParam;
 
 #pragma pack()
